@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e2f5df5cf735bc84994b6e4157c8492a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - menuSoundtrack: {instanceID: 0}
+  - arenaSoundtrack: {instanceID: 0}
+  - buttonClip: {instanceID: 0}
+  - orbClip: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
+  - leverClip: {instanceID: 0}
+  - audioSource1: {instanceID: 0}
+  - audioSource2: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
