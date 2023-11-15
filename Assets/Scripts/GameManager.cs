@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 	void Awake()
 	{
 		DontDestroyOnLoad(transform.gameObject);
-		this.LoadStartScreen();
+		//this.LoadStartScreen();
 	}
 	
     // Start is called before the first frame update

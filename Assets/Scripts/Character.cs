@@ -334,4 +334,9 @@ public class Character : MonoBehaviour
 			}
 		}
 	}
+	
+	public void setActive(bool b)
+	{
+		this.isActive = b;
+	}
 }

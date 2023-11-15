@@ -17,7 +17,7 @@ MonoBehaviour:
   m_properties:
     m_layerMask:
       serializedVersion: 2
-      m_Bits: 512
+      m_Bits: 0
     m_physicsType: 1
     m_rayWidth: 0.02
     m_angularRange: 360
