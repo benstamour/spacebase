@@ -16,6 +16,8 @@ public class Button : MonoBehaviour
 	
 	private GameManager gameManagerScript;
 	private GameObject character;
+	
+	[SerializeField] private GameObject[] holonums;
 
 	// Start is called before the first frame update
 	void Start()
@@ -37,16 +39,14 @@ public class Button : MonoBehaviour
 	
 	public void activate()
 	{
+		this.anim.SetBool("ButtonTrigger", true); // triggers button animation
 		if(activated == false)
 		{
-			//this.anim.SetTrigger("ButtonPress"); // triggers button animation
-			this.anim.SetBool("ButtonTrigger", true); // triggers button animation
 			//activated = true;
 			
 			//this.gameManagerScript.PlayLeverClip();
-			
-			StartCoroutine(CheckAnim()); // waits for lever animation to complete before triggering effects
 		}
+		StartCoroutine(CheckAnim()); // waits for lever animation to complete before triggering effects
 	}
 	
 	public bool getActivated()
@@ -78,7 +78,21 @@ public class Button : MonoBehaviour
 			yield return null;
 		}
 		//this.anim.ResetTrigger("ButtonPress");
-		Debug.Log(this.anim.GetBool("ButtonTrigger"));
+		//Debug.Log(this.anim.GetBool("ButtonTrigger"));
 		this.anim.SetBool("ButtonTrigger", false);
+		
+		if(activated == false)
+		{
+			Vector3 numLoc = new Vector3(-1.5f,0,0);
+			int code = this.gameManagerScript.getIntroCode();
+			int length = code.ToString().Length;
+			for(int i = 0; i < length; i++)
+			{
+				Instantiate(holonums[code%10], numLoc, Quaternion.identity);
+				numLoc += new Vector3(2.5f,0,0);
+				code = (int)Mathf.Floor(code/10);
+				yield return new WaitForSeconds(0.1f);
+			}
+		}
 	}
 }

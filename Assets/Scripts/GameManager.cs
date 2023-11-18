@@ -36,10 +36,15 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private bool savePoints = true; // are save points enabled or disabled?
 	[SerializeField] private bool[] orbsCollected = new bool[6]; // bool for whether each orb has been collected
 	
+	private int introcode;
+	
 	void Awake()
 	{
 		DontDestroyOnLoad(transform.gameObject);
 		//this.LoadStartScreen();
+		
+		this.introcode = UnityEngine.Random.Range(1000,9999);
+		Debug.Log(this.introcode);
 	}
 	
     // Start is called before the first frame update
@@ -319,5 +324,10 @@ public class GameManager : MonoBehaviour
 	public int getCurArenaMusic()
 	{
 		return this.curArenaMusic;
+	}
+	
+	public int getIntroCode()
+	{
+		return this.introcode;
 	}
 }

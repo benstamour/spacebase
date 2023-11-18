@@ -47,7 +47,15 @@ public class Keypad : MonoBehaviour
         ClearInput();
         panelMesh.material.SetVector("_EmissionColor", screenNormalColor * screenIntensity);
     }
-
+	
+	private void Start()
+	{
+		GameManager gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+		if(gameObject.name == "Keypad 1")
+		{
+			this.keypadCombo = gameManagerScript.getIntroCode();
+		}
+	}
 
     //Gets value from pressedbutton
     public void AddInput(string input)
