@@ -17,7 +17,17 @@ public class Button : MonoBehaviour
 	private GameManager gameManagerScript;
 	private GameObject character;
 	
+	// first button
 	[SerializeField] private GameObject[] holonums;
+	
+	// second button
+	[SerializeField] private float risingPlatformDistance = 3.5f;
+	private GameObject risingPlatform;
+	private bool platformIsRising = false;
+	private float risingPlatformSpeed = 1f;
+	private float risingPlatformProgress = 0f;
+	
+	[SerializeField] private int id = 1;
 
 	// Start is called before the first frame update
 	void Start()
@@ -35,14 +45,25 @@ public class Button : MonoBehaviour
 		{
 			activate();
 		}
+		
+		if(this.platformIsRising)
+		{
+			float change = this.risingPlatformSpeed*Time.deltaTime;
+			this.risingPlatform.transform.position = this.risingPlatform.transform.position + new Vector3(0, change, 0);
+			this.risingPlatformProgress += change;
+			if(this.risingPlatformProgress >= this.risingPlatformDistance)
+			{
+				this.platformIsRising = false;
+			}
+		}
     }
 	
 	public void activate()
 	{
 		this.anim.SetBool("ButtonTrigger", true); // triggers button animation
-		if(activated == false)
+		if(this.activated == false)
 		{
-			//activated = true;
+			//this.activated = true;
 			
 			//this.gameManagerScript.PlayLeverClip();
 		}
@@ -81,18 +102,28 @@ public class Button : MonoBehaviour
 		//Debug.Log(this.anim.GetBool("ButtonTrigger"));
 		this.anim.SetBool("ButtonTrigger", false);
 		
-		if(activated == false)
+		if(this.activated == false)
 		{
-			Vector3 numLoc = new Vector3(-1.5f,0,0);
-			int code = this.gameManagerScript.getIntroCode();
-			int length = code.ToString().Length;
-			for(int i = 0; i < length; i++)
+			if(this.id == 1)
 			{
-				Instantiate(holonums[code%10], numLoc, Quaternion.identity);
-				numLoc += new Vector3(2.5f,0,0);
-				code = (int)Mathf.Floor(code/10);
-				yield return new WaitForSeconds(0.1f);
+				Vector3 numLoc = new Vector3(-1.5f,0,0);
+				int code = this.gameManagerScript.getIntroCode();
+				int length = code.ToString().Length;
+				for(int i = 0; i < length; i++)
+				{
+					Instantiate(holonums[code%10], numLoc, Quaternion.identity);
+					numLoc += new Vector3(2.5f,0,0);
+					code = (int)Mathf.Floor(code/10);
+					yield return new WaitForSeconds(0.1f);
+				}
 			}
+			else if(this.id == 2)
+			{
+				this.risingPlatform = GameObject.Find("Rising Platform");
+				this.platformIsRising = true;
+			}
+			
+			this.activated = true;
 		}
 	}
 }

@@ -27,7 +27,6 @@ public class SwingingSpikeball : MonoBehaviour
 			{
 				angle -= 360;
 			}
-			Debug.Log(angle);
 			float move = (-9.81f*Mathf.Pow(Mathf.Abs(0.0155f*angle),2) + 5)*Time.deltaTime;	
 			
 			if(dir == 0)
