@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
 		//this.LoadStartScreen();
 		
 		this.introcode = UnityEngine.Random.Range(1000,9999);
-		Debug.Log(this.introcode);
 	}
 	
     // Start is called before the first frame update
