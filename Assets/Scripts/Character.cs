@@ -13,7 +13,7 @@ public class Character : MonoBehaviour
 	private float speed = 5f;
 	[SerializeField] private Vector3 playerVelocity;
 	[SerializeField] private bool groundedPlayer;
-	private float jumpHeight = 1f;
+	private float jumpHeight = 0.5f;
 	public float gravityValue = -9.81f;
 	private float turnSpeed = 1.5f;
 	[SerializeField] private Vector3 rotation;

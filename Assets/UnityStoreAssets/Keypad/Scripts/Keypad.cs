@@ -135,7 +135,8 @@ public class Keypad : MonoBehaviour
 		
 		if(gameObject.name == "Keypad 1")
 		{
-			GameObject door = GameObject.Find("door_3");
+			// open exit door
+			GameObject door = GameObject.Find("First Door");
 			Animator anim = door.GetComponent<Animator>();
 			anim.SetBool("character_nearby", true);
 		}

@@ -12,6 +12,8 @@ public class MovingObject : MonoBehaviour
 	private Vector3 dir1 = Vector3.zero;
 	[SerializeField] private float speed = 2f;
 	
+	//private Vector3 moved = Vector3.zero;
+	
 	//[SerializeField] float rotateSpeed = 0f;
 	
     // Start is called before the first frame update
@@ -23,14 +25,20 @@ public class MovingObject : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        // handles movement of spiked walls
+		// handles movement of spiked walls
         if(this.dir == 0)
 		{
-			gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, this.startPos + this.dir0, speed*Time.deltaTime);
+			//this.moved = Vector3.MoveTowards(gameObject.transform.position, this.startPos + this.dir0, speed*Time.deltaTime) - gameObject.transform.position;
+			
+			gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, this.startPos + this.dir0, speed*Time.fixedDeltaTime);
+			//this.moved = -this.move*this.speed*Time.deltaTime;
+			
+			//gameObject.transform.position -= this.move*this.speed*Time.deltaTime;
 			if((gameObject.transform.position - (this.startPos + this.dir0)).magnitude <= 0.01)
 			{
+				//this.moved = this.startPos + this.dir0 - gameObject.transform.position;
 				gameObject.transform.position = this.startPos + this.dir0;
 			}
 			if(gameObject.transform.position == this.startPos + this.dir0)
@@ -41,9 +49,15 @@ public class MovingObject : MonoBehaviour
 		}
 		else
 		{
-			gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, this.startPos + this.dir1, speed*Time.deltaTime);
+			//this.moved = Vector3.MoveTowards(gameObject.transform.position, this.startPos + this.dir1, speed*Time.deltaTime) - gameObject.transform.position;
+			
+			gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, this.startPos + this.dir1, speed*Time.fixedDeltaTime);
+			//this.moved = this.move*this.speed*Time.deltaTime;
+			
+			//gameObject.transform.position += this.move*this.speed*Time.deltaTime;
 			if((gameObject.transform.position - (this.startPos + this.dir1)).magnitude <= 0.01)
 			{
+				//this.moved = this.startPos + this.dir1 - gameObject.transform.position;
 				gameObject.transform.position = this.startPos + this.dir1;
 			}
 			if(gameObject.transform.position == this.startPos + this.dir1)
@@ -57,4 +71,21 @@ public class MovingObject : MonoBehaviour
 		//float rotateAmount = this.rotateSpeed*Time.deltaTime;
 		//gameObject.transform.Rotate(new Vector3(0f, rotateAmount, 0f));
     }
+	
+	/*public int getDir()
+	{
+		return this.dir;
+	}
+	public Vector3 getMove()
+	{
+		return this.move;
+	}
+	public float getSpeed()
+	{
+		return this.speed;
+	}
+	public Vector3 getMoved()
+	{
+		return this.moved;
+	}*/
 }

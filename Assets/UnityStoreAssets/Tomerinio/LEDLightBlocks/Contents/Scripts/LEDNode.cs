@@ -23,7 +23,7 @@ public class LEDNode : MonoBehaviour
     // Emitted light intensity parameters.
     private float intensity = 0;
     private float minIntensity = 0;
-    private float maxIntensity = 0.5f; // prev. 1.0
+    private float maxIntensity = 1.0f;
     private float onTime = 0;
     private float maxOnTime = 1.0f;
     private float onTimerSpeed = 0f; // prev 2.0
@@ -33,18 +33,31 @@ public class LEDNode : MonoBehaviour
     // Emitted light increase/decrease controls.
     private enum LightState { INCR, DECR, IDLE}
     private LightState lightState = LightState.IDLE;
+	
+	[SerializeField] private bool on = false;
+	[SerializeField] private Color colour = Color.cyan;
 
     void Start()
     {
         // Init the attached components.
         pointLight = this.GetComponent<Light>();
         rend = GetComponent<Renderer>();
+		
+		if(!this.on)
+		{
+			Material mat = rend.material;
+			Color finalColor = Color.black * Mathf.LinearToGammaSpace(intensity);
+			mat.SetColor("_EmissionColor", finalColor);
+		}
     }
 
     void FixedUpdate() // formerly used Update() here
     {
-        ResolveNodeState();
-        UpdateColor();
+        if(this.on)
+		{
+			ResolveNodeState();
+			UpdateColor();
+		}
     }
 
     // Decides on state of fading in/out based on the input parameters.
@@ -161,7 +174,21 @@ public class LEDNode : MonoBehaviour
         Color baseColor = mat.color;
 
         // Calculate the resulting color based on the intensity.
-        Color finalColor = baseColor * Mathf.LinearToGammaSpace(intensity);
+        //Color finalColor = baseColor * Mathf.LinearToGammaSpace(intensity);
+		Color finalColor = this.colour * Mathf.LinearToGammaSpace(intensity);
         mat.SetColor("_EmissionColor", finalColor);
     }
+	
+	public void updateOnTimerSpeed(float speed)
+	{
+		this.onTimerSpeed = speed;
+	}
+	public void updateOffTimerSpeed(float speed)
+	{
+		this.offTimerSpeed = speed;
+	}
+	public void toggle(bool b)
+	{
+		this.on = b;
+	}
 }

@@ -23,9 +23,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660387948819215335}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -61.720135, y: 6.748724, z: 17.771812}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8262993956526543943}
   - {fileID: 8262993955681563775}
@@ -41,7 +43,6 @@ Transform:
   - {fileID: 8262993956437176157}
   - {fileID: 8262993955870981763}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8262993955001432163
 GameObject:
@@ -60,7 +61,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993955001432191
 Transform:
@@ -69,12 +70,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993955001432163}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.30586624, y: 1.3612757, z: 2.1731873}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993955001432188
 MeshFilter:
@@ -95,10 +97,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -123,6 +127,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993955001432162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +144,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993955571032660
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +163,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993955571032656
 Transform:
@@ -165,12 +172,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993955571032660}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.21486664, y: 1.4622765, z: 0.62418747}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993955571032657
 MeshFilter:
@@ -191,10 +199,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -219,6 +229,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993955571032663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +246,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993955681563747
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +265,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993955681563775
 Transform:
@@ -261,12 +274,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993955681563747}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.112133026, y: 1.0662761, z: 0.9301872}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993955681563772
 MeshFilter:
@@ -287,10 +301,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -315,6 +331,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993955681563746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +348,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993955799654777
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +367,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993955799654773
 Transform:
@@ -357,12 +376,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993955799654777}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 1.2341347, y: 0.09027624, z: 0.5431881}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993955799654778
 MeshFilter:
@@ -383,10 +403,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -411,6 +433,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993955799654776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +450,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993955870981767
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +469,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993955870981763
 Transform:
@@ -453,12 +478,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993955870981767}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 1.7601357, y: -0.28872395, z: 0.14818764}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993955870981760
 MeshFilter:
@@ -479,10 +505,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -507,6 +535,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993955870981766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,6 +552,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993956357384872
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,7 +571,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993956357384868
 Transform:
@@ -549,12 +580,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993956357384872}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.8298645, y: 1.8212757, z: 0.2781868}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993956357384869
 MeshFilter:
@@ -575,10 +607,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -603,6 +637,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993956357384875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,6 +654,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993956378293031
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +673,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993956378293027
 Transform:
@@ -645,12 +682,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993956378293031}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.76013565, y: 0.39427614, z: 0.94418716}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993956378293024
 MeshFilter:
@@ -671,10 +709,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -699,6 +739,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993956378293030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,6 +756,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993956398786110
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,7 +775,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993956398786106
 Transform:
@@ -741,12 +784,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993956398786110}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.112133026, y: 1.0662761, z: 1.807188}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993956398786107
 MeshFilter:
@@ -767,10 +811,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -795,6 +841,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993956398786105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,6 +858,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993956437176129
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +877,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993956437176157
 Transform:
@@ -837,12 +886,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993956437176129}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 1.5501366, y: -0.35272408, z: 2.5981884}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993956437176130
 MeshFilter:
@@ -863,10 +913,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -891,6 +943,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993956437176128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -907,6 +960,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993956480137207
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,7 +979,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993956480137203
 Transform:
@@ -933,12 +988,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993956480137207}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 1.0681343, y: -0.028724194, z: 2.175188}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993956480137200
 MeshFilter:
@@ -959,10 +1015,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -987,6 +1045,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993956480137206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1003,6 +1062,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993956526543944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1081,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993956526543943
 Transform:
@@ -1029,12 +1090,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993956526543944}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.4011345, y: 0.7412758, z: 1.3781872}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993956526543940
 MeshFilter:
@@ -1055,10 +1117,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1083,6 +1147,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993956526543947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,6 +1164,8 @@ MonoBehaviour:
   isFirstNode: 1
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993956600535135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,7 +1183,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993956600535131
 Transform:
@@ -1125,12 +1192,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993956600535135}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.76413345, y: 0.39427614, z: 1.8061867}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993956600535128
 MeshFilter:
@@ -1151,10 +1219,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1179,6 +1249,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993956600535134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,6 +1266,8 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &8262993956748324108
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,7 +1285,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8262993956748324104
 Transform:
@@ -1221,12 +1294,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8262993956748324108}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.49999997, y: 0.5, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.7898636, y: 1.8202763, z: 2.5481873}
   m_LocalScale: {x: 0.18797, y: 0.18797, z: 0.18797001}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5569310406201820455}
-  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 45.000004, y: 90, z: 45.000004}
 --- !u!33 &8262993956748324105
 MeshFilter:
@@ -1247,10 +1321,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1275,6 +1351,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8262993956748324111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,3 +1368,5 @@ MonoBehaviour:
   isFirstNode: 0
   isPointLightEn: 0
   slowProgress: 1
+  on: 0
+  colour: {r: 0, g: 1, b: 1, a: 1}
