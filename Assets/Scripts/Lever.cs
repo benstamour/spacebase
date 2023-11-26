@@ -17,6 +17,10 @@ public class Lever : MonoBehaviour
 	private GameManager gameManagerScript;
 	
 	[SerializeField] private int id = 1;
+	
+	[SerializeField] private GameObject cyanLasers;
+	[SerializeField] private GameObject magentaLasers;
+	[SerializeField] private GameObject yellowLasers;
 
 	// Start is called before the first frame update
 	void Start()
@@ -38,7 +42,8 @@ public class Lever : MonoBehaviour
 	
 	public void activate()
 	{
-		if(activated == false)
+		string[] colours = {"Cyan", "Magenta", "Yellow"};
+		if(activated == false && (this.id == 1 || GameObject.Find(colours[this.id-2] + " Blocking Laser") == null))
 		{
 			anim.SetBool("LeverUp", false); // triggers lever animation
 			activated = true;
@@ -93,7 +98,99 @@ public class Lever : MonoBehaviour
 			yield return null;
 		}
 		
-		if(this.id == 1)
+		string[] colours = {"Cyan", "Magenta", "Yellow"};
+		GameObject icons = GameObject.Find("Colour Icons");
+		GameObject platforms;
+		GameObject line;
+		if(this.id >= 1 && this.id <= 3)
+		{
+			GameObject blockingLaser = GameObject.Find(colours[this.id-1] + " Blocking Laser");
+			blockingLaser.SetActive(false);
+			
+			if(this.id == 3)
+			{
+				this.magentaLasers.SetActive(false);
+			}
+			
+			if(this.id > 1)
+			{
+				line = GameObject.Find(colours[this.id-2] + " Line");
+				foreach(Transform node in line.transform)
+				{
+					LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
+					LEDNodeScript.updateOnTimerSpeed(2.0f);
+					LEDNodeScript.updateOffTimerSpeed(0f);
+				}
+				
+				platforms = GameObject.Find(colours[this.id-2] + " LED Platforms");
+				foreach(Transform platform in platforms.transform)
+				{
+					Transform square = platform.Find("LED_Square_Example");
+					foreach(Transform node in square)
+					{
+						LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
+						LEDNodeScript.updateOnTimerSpeed(2.0f);
+						LEDNodeScript.updateOffTimerSpeed(0f);
+					}
+				}
+				
+				foreach(Transform icon in icons.transform)
+				{
+					if(icon.gameObject.name.Contains(colours[this.id-2]))
+					{
+						foreach(Transform node in icon.transform)
+						{
+							LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
+							LEDNodeScript.updateOnTimerSpeed(2.0f);
+							LEDNodeScript.updateOffTimerSpeed(0f);
+						}
+					}
+				}
+			}
+			
+			line = GameObject.Find(colours[this.id-1] + " Line");
+			foreach(Transform node in line.transform)
+			{
+				LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
+				LEDNodeScript.toggle(true);
+			}
+			
+			platforms = GameObject.Find(colours[this.id-1] + " LED Platforms");
+			foreach(Transform platform in platforms.transform)
+			{
+				Transform square = platform.Find("LED_Square_Example");
+				foreach(Transform node in square)
+				{
+					LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
+					LEDNodeScript.toggle(true);
+				}
+			}
+			
+			foreach(Transform icon in icons.transform)
+			{
+				if(icon.gameObject.name.Contains(colours[this.id-1]))
+				{
+					foreach(Transform node in icon.transform)
+					{
+						LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
+						LEDNodeScript.toggle(true);
+					}
+				}
+			}
+			
+			if(this.id == 2)
+			{
+				yield return new WaitForSeconds(1.5f);
+				this.magentaLasers.SetActive(true);
+			}
+			else if(this.id == 3)
+			{
+				yield return new WaitForSeconds(1.5f);
+				this.yellowLasers.SetActive(true);
+			}
+		}
+		
+		/*if(this.id == 1)
 		{
 			GameObject cyanLine = GameObject.Find("Cyan Line");
 			foreach(Transform node in cyanLine.transform)
@@ -152,6 +249,8 @@ public class Lever : MonoBehaviour
 					LEDNodeScript.toggle(true);
 				}
 			}
+			yield return new WaitForSeconds(1.5f);
+			this.magentaLasers.SetActive(true);
 		}
 		else if(this.id == 3)
 		{
@@ -175,6 +274,8 @@ public class Lever : MonoBehaviour
 				}
 			}
 			
+			this.magentaLasers.SetActive(false);
+			
 			GameObject yellowLine = GameObject.Find("Yellow Line");
 			foreach(Transform node in yellowLine.transform)
 			{
@@ -192,6 +293,8 @@ public class Lever : MonoBehaviour
 					LEDNodeScript.toggle(true);
 				}
 			}
-		}
+			yield return new WaitForSeconds(1.5f);
+			this.yellowLasers.SetActive(true);
+		}*/
 	}
 }

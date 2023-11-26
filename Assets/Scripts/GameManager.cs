@@ -37,13 +37,25 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private bool[] orbsCollected = new bool[6]; // bool for whether each orb has been collected
 	
 	private int introcode;
+	private string colourcode;
 	
 	void Awake()
 	{
 		DontDestroyOnLoad(transform.gameObject);
 		//this.LoadStartScreen();
 		
+		// move the below code to the ARENA MANAGER after making it
 		this.introcode = UnityEngine.Random.Range(1000,9999);
+		
+		string[] arr = {"C", "C", "M", "M", "Y", "Y"};
+		for(int i = arr.Length - 1; i > 0; i--)
+		{
+			int num = UnityEngine.Random.Range(0,i);
+			string temp = arr[i];
+			arr[i] = arr[num];
+			arr[num] = temp;
+		}
+		this.colourcode = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
 	}
 	
     // Start is called before the first frame update
@@ -58,6 +70,26 @@ public class GameManager : MonoBehaviour
 		GameObject door = GameObject.Find("Second Door");
 		Animator anim = door.GetComponent<Animator>();
 		anim.SetBool("character_nearby", true);
+		
+		// remove unneeded colour code icons
+		for(int i = 0; i < this.colourcode.Length; i++)
+		{
+			if(colourcode[i] != 'C')
+			{
+				GameObject cyanIcon = GameObject.Find("Cyan Icon " + (i+1));
+				cyanIcon.SetActive(false);
+			}
+			if(colourcode[i] != 'M')
+			{
+				GameObject magentaIcon = GameObject.Find("Magenta Icon " + (i+1));
+				magentaIcon.SetActive(false);
+			}
+			if(colourcode[i] != 'Y')
+			{
+				GameObject yellowIcon = GameObject.Find("Yellow Icon " + (i+1));
+				yellowIcon.SetActive(false);
+			}
+		}
     }
 
     // Update is called once per frame
@@ -336,5 +368,9 @@ public class GameManager : MonoBehaviour
 	public int getIntroCode()
 	{
 		return this.introcode;
+	}
+	public string getColourCode()
+	{
+		return this.colourcode;
 	}
 }
