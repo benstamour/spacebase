@@ -21,6 +21,26 @@ public class ColourCode : MonoBehaviour
         this.code = gameManagerScript.getColourCode();
 		this.screen = GameObject.Find("Light-Up Screen");
 		Debug.Log(this.code);
+		
+		// remove unneeded colour code icons
+		for(int i = 0; i < this.code.Length; i++)
+		{
+			if(this.code[i] != 'C')
+			{
+				GameObject cyanIcon = GameObject.Find("Cyan Icon " + (i+1));
+				cyanIcon.SetActive(false);
+			}
+			if(this.code[i] != 'M')
+			{
+				GameObject magentaIcon = GameObject.Find("Magenta Icon " + (i+1));
+				magentaIcon.SetActive(false);
+			}
+			if(this.code[i] != 'Y')
+			{
+				GameObject yellowIcon = GameObject.Find("Yellow Icon " + (i+1));
+				yellowIcon.SetActive(false);
+			}
+		}
     }
 
     // Update is called once per frame

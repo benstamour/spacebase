@@ -107,6 +107,10 @@ public class Lever : MonoBehaviour
 			GameObject blockingLaser = GameObject.Find(colours[this.id-1] + " Blocking Laser");
 			blockingLaser.SetActive(false);
 			
+			if(this.id == 2)
+			{
+				this.cyanLasers.SetActive(false);
+			}
 			if(this.id == 3)
 			{
 				this.magentaLasers.SetActive(false);
@@ -178,6 +182,11 @@ public class Lever : MonoBehaviour
 				}
 			}
 			
+			if(this.id == 1)
+			{
+				yield return new WaitForSeconds(1.5f);
+				this.cyanLasers.SetActive(true);
+			}
 			if(this.id == 2)
 			{
 				yield return new WaitForSeconds(1.5f);

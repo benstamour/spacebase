@@ -70,26 +70,6 @@ public class GameManager : MonoBehaviour
 		GameObject door = GameObject.Find("Second Door");
 		Animator anim = door.GetComponent<Animator>();
 		anim.SetBool("character_nearby", true);
-		
-		// remove unneeded colour code icons
-		for(int i = 0; i < this.colourcode.Length; i++)
-		{
-			if(colourcode[i] != 'C')
-			{
-				GameObject cyanIcon = GameObject.Find("Cyan Icon " + (i+1));
-				cyanIcon.SetActive(false);
-			}
-			if(colourcode[i] != 'M')
-			{
-				GameObject magentaIcon = GameObject.Find("Magenta Icon " + (i+1));
-				magentaIcon.SetActive(false);
-			}
-			if(colourcode[i] != 'Y')
-			{
-				GameObject yellowIcon = GameObject.Find("Yellow Icon " + (i+1));
-				yellowIcon.SetActive(false);
-			}
-		}
     }
 
     // Update is called once per frame
