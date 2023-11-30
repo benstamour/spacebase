@@ -37,6 +37,11 @@ public class CharacterPlatform : MonoBehaviour
 				//Debug.Log("Gavaan: " + move.ToString("F4"));
 				this.characterController.Move(move);*/
 			}
+			else if(hit.collider.gameObject.tag == "HoloTile" && hit.distance <= 0.3f)
+			{
+				HoloTile holoTileScript = hit.collider.gameObject.GetComponent<HoloTile>();
+				holoTileScript.Split();
+			}
 			/*if(hit.collider.gameObject.name == "Cylinder" && hit.distance <= 0.5f)
 			{
 				CharacterController characterController = gameObject.GetComponent<CharacterController>();
