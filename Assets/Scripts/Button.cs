@@ -122,6 +122,12 @@ public class Button : MonoBehaviour
 				this.risingPlatform = GameObject.Find("Rising Platform");
 				this.platformIsRising = true;
 			}
+			else if(this.id == 3)
+			{
+				GameObject door = GameObject.Find("Fourth Door");
+				Animator anim = door.GetComponent<Animator>();
+				anim.SetBool("character_nearby", true);
+			}
 			
 			this.activated = true;
 		}

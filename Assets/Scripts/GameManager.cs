@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 	
 	private int introcode;
 	private string colourcode;
+	private string holocode;
 	
 	void Awake()
 	{
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
 		//this.LoadStartScreen();
 		
 		// move the below code to the ARENA MANAGER after making it
-		this.introcode = UnityEngine.Random.Range(1000,9999);
+		this.introcode = UnityEngine.Random.Range(1000,10000);
 		
 		string[] arr = {"C", "C", "M", "M", "Y", "Y"};
 		for(int i = arr.Length - 1; i > 0; i--)
@@ -56,6 +57,12 @@ public class GameManager : MonoBehaviour
 			arr[num] = temp;
 		}
 		this.colourcode = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
+		
+		int numHoloTiles = 6;
+		for(int i = 0; i < numHoloTiles; i++)
+		{
+			this.holocode = this.holocode + UnityEngine.Random.Range(0,2);
+		}
 	}
 	
     // Start is called before the first frame update
@@ -352,5 +359,9 @@ public class GameManager : MonoBehaviour
 	public string getColourCode()
 	{
 		return this.colourcode;
+	}
+	public string getHoloCode()
+	{
+		return this.holocode;
 	}
 }

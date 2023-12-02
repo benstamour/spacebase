@@ -9,11 +9,14 @@ public class HoloTile : MonoBehaviour
 	[SerializeField] private GameObject pinkTile;
 	private Vector3 nextTilePos;
 	private bool hasSplit = false;
-	private float moveDist = 1.5f;
+	private float moveDist = 1f;
 	private float moveSpeed = 2f;
 	private GameObject nextNextTile;
-	public static int[] key = {1, 0, 0, 2};
+	private string holocode;
 	[SerializeField] private int id = 0;
+	
+	[SerializeField] private GameObject codeTilePrefab;
+	[SerializeField] private GameObject blankTilePrefab;
 	
     // Start is called before the first frame update
     void Start()
@@ -28,7 +31,29 @@ public class HoloTile : MonoBehaviour
 			}
 			Debug.Log(this.nextTile.name);
 		}
-		Debug.Log(key[0] + " " + key[1] + " " + key[2] + " " + key[3]);
+		
+		GameManager gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+		this.holocode = gameManagerScript.getHoloCode();
+		Debug.Log("A" + this.holocode);
+		
+		if(this.id == -1)
+		{
+			Vector3 holoFloorPos = new Vector3(18.5f, 8f, -51.75f);
+			for(int i = 0; i < this.holocode.Length; i++)
+			{
+				if(this.holocode[i] == '0')
+				{
+					Instantiate(this.codeTilePrefab, holoFloorPos - Vector3.forward, Quaternion.identity);
+					Instantiate(this.blankTilePrefab, holoFloorPos + Vector3.forward, Quaternion.identity);
+				}
+				else
+				{
+					Instantiate(this.codeTilePrefab, holoFloorPos + Vector3.forward, Quaternion.identity);
+					Instantiate(this.blankTilePrefab, holoFloorPos - Vector3.forward, Quaternion.identity);
+				}
+				holoFloorPos += 2f*Vector3.left;
+			}
+		}
     }
 
     // Update is called once per frame
@@ -66,7 +91,8 @@ public class HoloTile : MonoBehaviour
 				pinkScript.setNextTile(this.nextNextTile);
 			}
 			
-			if(key[this.id+1] == 0)
+			Debug.Log(this.holocode + " " + this.id);
+			if(this.holocode[this.id+1] == '0')
 			{
 				pinkTile.GetComponent<Collider>().enabled = false;
 			}
