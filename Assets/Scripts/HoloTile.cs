@@ -29,12 +29,10 @@ public class HoloTile : MonoBehaviour
 			{
 				this.nextNextTile = holoTileScript.nextTile;
 			}
-			Debug.Log(this.nextTile.name);
 		}
 		
 		GameManager gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 		this.holocode = gameManagerScript.getHoloCode();
-		Debug.Log("A" + this.holocode);
 		
 		if(this.id == -1)
 		{
@@ -91,7 +89,6 @@ public class HoloTile : MonoBehaviour
 				pinkScript.setNextTile(this.nextNextTile);
 			}
 			
-			Debug.Log(this.holocode + " " + this.id);
 			if(this.holocode[this.id+1] == '0')
 			{
 				pinkTile.GetComponent<Collider>().enabled = false;

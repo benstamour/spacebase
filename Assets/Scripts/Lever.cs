@@ -43,7 +43,7 @@ public class Lever : MonoBehaviour
 	public void activate()
 	{
 		string[] colours = {"Cyan", "Magenta", "Yellow"};
-		if(activated == false && (this.id == 1 || GameObject.Find(colours[this.id-2] + " Blocking Laser") == null))
+		if(activated == false && (this.id == 1 || this.id >= 4 || GameObject.Find(colours[this.id-2] + " Blocking Laser") == null))
 		{
 			anim.SetBool("LeverUp", false); // triggers lever animation
 			activated = true;
@@ -198,112 +198,55 @@ public class Lever : MonoBehaviour
 				this.yellowLasers.SetActive(true);
 			}
 		}
-		
-		/*if(this.id == 1)
+		else if(this.id >= 4)
 		{
-			GameObject cyanLine = GameObject.Find("Cyan Line");
-			foreach(Transform node in cyanLine.transform)
+			if(this.id == 4)
 			{
-				LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-				LEDNodeScript.toggle(true);
+				GameObject door = GameObject.Find("Fifth Door");
+				Animator anim = door.GetComponent<Animator>();
+				anim.SetBool("character_nearby", true);
+			}
+			else if(this.id == 5)
+			{
+				GameObject door = GameObject.Find("Sixth Door");
+				Animator anim = door.GetComponent<Animator>();
+				anim.SetBool("character_nearby", true);
 			}
 			
-			GameObject cyanPlatforms = GameObject.Find("Cyan LED Platforms");
-			foreach(Transform platform in cyanPlatforms.transform)
+			Physics.gravity = -Physics.gravity;
+			GameObject character = GameObject.FindWithTag("Character");
+			Character characterScript = character.GetComponent<Character>();
+			characterScript.gravityValue *= -1;
+			characterScript.gravSign *= -1;
+			float rotateSpeed = 300f;
+			Vector3 axis = character.transform.forward;
+			
+			if(characterScript.gravSign == -1)
 			{
-				Transform square = platform.Find("LED_Square_Example");
-				foreach(Transform node in square)
+				float rotation = 0f;
+				while(rotation < 180)
 				{
-					LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-					LEDNodeScript.toggle(true);
+					float waitTime = Time.deltaTime;
+					float amount = Mathf.Min(Mathf.Abs(180 - character.transform.eulerAngles.z), rotateSpeed*waitTime);
+					//character.transform.Rotate(new Vector3(0,0,amount));
+					character.transform.RotateAround(character.transform.position + (Vector3.up*characterScript.gravSign*0.8f), axis, amount);
+					rotation += amount;
+					yield return null;
+				}
+			}
+			else
+			{
+				float rotation = 180f;
+				while(rotation > 0)
+				{
+					float waitTime = Time.deltaTime;
+					float amount = Mathf.Min(Mathf.Abs(character.transform.eulerAngles.z), rotateSpeed*waitTime);
+					//character.transform.Rotate(new Vector3(0,0,amount));
+					character.transform.RotateAround(character.transform.position - (Vector3.up*characterScript.gravSign*0.8f), axis, amount);
+					rotation -= amount;
+					yield return null;
 				}
 			}
 		}
-		else if(this.id == 2)
-		{
-			GameObject cyanLine = GameObject.Find("Cyan Line");
-			foreach(Transform node in cyanLine.transform)
-			{
-				LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-				LEDNodeScript.updateOnTimerSpeed(2.0f);
-				LEDNodeScript.updateOffTimerSpeed(0f);
-			}
-			
-			GameObject cyanPlatforms = GameObject.Find("Cyan LED Platforms");
-			foreach(Transform platform in cyanPlatforms.transform)
-			{
-				Transform square = platform.Find("LED_Square_Example");
-				foreach(Transform node in square)
-				{
-					LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-					LEDNodeScript.updateOnTimerSpeed(2.0f);
-					LEDNodeScript.updateOffTimerSpeed(0f);
-				}
-			}
-			
-			GameObject magentaLine = GameObject.Find("Magenta Line");
-			foreach(Transform node in magentaLine.transform)
-			{
-				LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-				LEDNodeScript.toggle(true);
-			}
-			
-			GameObject magentaPlatforms = GameObject.Find("Magenta LED Platforms");
-			foreach(Transform platform in magentaPlatforms.transform)
-			{
-				Transform square = platform.Find("LED_Square_Example");
-				foreach(Transform node in square)
-				{
-					LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-					LEDNodeScript.toggle(true);
-				}
-			}
-			yield return new WaitForSeconds(1.5f);
-			this.magentaLasers.SetActive(true);
-		}
-		else if(this.id == 3)
-		{
-			GameObject magentaLine = GameObject.Find("Magenta Line");
-			foreach(Transform node in magentaLine.transform)
-			{
-				LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-				LEDNodeScript.updateOnTimerSpeed(2.0f);
-				LEDNodeScript.updateOffTimerSpeed(0f);
-			}
-			
-			GameObject magentaPlatforms = GameObject.Find("Magenta LED Platforms");
-			foreach(Transform platform in magentaPlatforms.transform)
-			{
-				Transform square = platform.Find("LED_Square_Example");
-				foreach(Transform node in square)
-				{
-					LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-					LEDNodeScript.updateOnTimerSpeed(2.0f);
-					LEDNodeScript.updateOffTimerSpeed(0f);
-				}
-			}
-			
-			this.magentaLasers.SetActive(false);
-			
-			GameObject yellowLine = GameObject.Find("Yellow Line");
-			foreach(Transform node in yellowLine.transform)
-			{
-				LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-				LEDNodeScript.toggle(true);
-			}
-			
-			GameObject yellowPlatforms = GameObject.Find("Yellow LED Platforms");
-			foreach(Transform platform in yellowPlatforms.transform)
-			{
-				Transform square = platform.Find("LED_Square_Example");
-				foreach(Transform node in square)
-				{
-					LEDNode LEDNodeScript = node.gameObject.GetComponent<LEDNode>();
-					LEDNodeScript.toggle(true);
-				}
-			}
-			yield return new WaitForSeconds(1.5f);
-			this.yellowLasers.SetActive(true);
-		}*/
 	}
 }

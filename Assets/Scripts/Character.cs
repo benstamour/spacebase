@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
 	[SerializeField] private float scaleVal = 1.5f; // different character prefabs have different collider values due to scaling
 	private float multiplier; // scaled height of character relative to scale of 1.5
 	[SerializeField] public bool onAirVent = false;
+	public int gravSign = 1;
 	
 	// game data
 	[SerializeField] private int score = 0; // number of orbs collected since last save point
@@ -51,8 +52,9 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		groundedPlayer = characterController.isGrounded;
-        if(groundedPlayer && playerVelocity.y < 0)
+		//groundedPlayer = characterController.isGrounded;
+		groundedPlayer = isCustomGrounded();
+        if(groundedPlayer && gravSign*playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
         }
@@ -75,9 +77,9 @@ public class Character : MonoBehaviour
 			}*/
 			if(Input.GetButton("Jump") && groundedPlayer)// && !animator.GetBool("isJumping"))// && !(animator.IsInTransition(0) && AnimPlaying("Jumping")))
 			{
-				playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+				playerVelocity.y += gravSign*Mathf.Sqrt(jumpHeight * -3.0f * gravSign*gravityValue);
 				
-				if(jumpHeight * -3.0f * gravityValue >= 0)
+				if(jumpHeight * -3.0f * gravSign*gravityValue >= 0)
 				{
 					this.isJumping = true; // if character is moving upwards, show jump animation
 					//animator.SetBool("isIdle", false);
@@ -168,7 +170,7 @@ public class Character : MonoBehaviour
 					StartCoroutine(ChangeCharController(0));
 				}
 			}
-			if(this.isJumping && playerVelocity.y < 0)
+			if(this.isJumping && gravSign*playerVelocity.y < 0)
 			{
 				animator.SetBool("isJumping", false);
 				animator.SetBool("isIdle", true);
@@ -338,5 +340,17 @@ public class Character : MonoBehaviour
 	public void setActive(bool b)
 	{
 		this.isActive = b;
+	}
+	
+	public bool isCustomGrounded()
+	{
+		if(this.gravSign == 1)
+		{
+			return characterController.isGrounded;
+		}
+		else
+		{
+			return (characterController.collisionFlags & CollisionFlags.Above) != 0;
+		}
 	}
 }
