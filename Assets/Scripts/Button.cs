@@ -27,6 +27,9 @@ public class Button : MonoBehaviour
 	private float risingPlatformSpeed = 1f;
 	private float risingPlatformProgress = 0f;
 	
+	// for circuit tiles
+	[SerializeField] private GameObject circuitTile;
+	
 	[SerializeField] private int id = 1;
 
 	// Start is called before the first frame update
@@ -130,6 +133,10 @@ public class Button : MonoBehaviour
 			}
 			
 			this.activated = true;
+		}
+		if(this.id >= 4)
+		{
+			this.circuitTile.GetComponent<CircuitTile>().addToRotation(90f);
 		}
 	}
 }

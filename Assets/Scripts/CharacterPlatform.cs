@@ -42,6 +42,10 @@ public class CharacterPlatform : MonoBehaviour
 				HoloTile holoTileScript = hit.collider.gameObject.GetComponent<HoloTile>();
 				holoTileScript.Split();
 			}
+			else if((hit.collider.gameObject.transform.parent != null && hit.collider.gameObject.transform.parent.gameObject.tag == "CircuitTile") && hit.distance <= 0.5f)
+			{
+				gameObject.transform.parent = hit.collider.gameObject.transform.parent;
+			}
 			/*if(hit.collider.gameObject.name == "Cylinder" && hit.distance <= 0.5f)
 			{
 				CharacterController characterController = gameObject.GetComponent<CharacterController>();

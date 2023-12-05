@@ -194,6 +194,5 @@ public class LEDNode : MonoBehaviour
 	public void updateColour(Color c)
 	{
 		this.colour = c;
-		Debug.Log(c);
 	}
 }
