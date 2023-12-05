@@ -9,6 +9,7 @@ TagManager:
   - DeathZone
   - MovingPlatform
   - HoloTile
+  - CircuitTile
   layers:
   - Default
   - TransparentFX

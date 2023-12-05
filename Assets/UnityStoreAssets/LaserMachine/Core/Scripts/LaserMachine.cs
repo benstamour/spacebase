@@ -22,7 +22,7 @@ public class LaserMachine : MonoBehaviour {
 
     [Header("External Data")]
     
-    [SerializeField] LaserData m_data;
+    [SerializeField] public LaserData m_data; // previously public/private not specified
 
     [Tooltip("This variable is true by default, all the inspector properties will be overridden.")]
     [SerializeField] bool m_overrideExternalProperties = true;
@@ -158,6 +158,12 @@ public class LaserMachine : MonoBehaviour {
 							//Debug.Log(gameObject.name);
 							KillPlayer killScript = hitInfo3D.collider.gameObject.GetComponent<KillPlayer>();
 							killScript.LaserHit();
+						}
+						else if(hitInfo3D.collider.gameObject.transform.parent != null && hitInfo3D.collider.gameObject.transform.parent.gameObject.tag == "CircuitTile")
+						{
+							//Debug.Log(m_data.m_laserMaterial.color);
+							CircuitTile circuitTileScript = hitInfo3D.collider.gameObject.transform.parent.gameObject.GetComponent<CircuitTile>();
+							circuitTileScript.Activate(hitInfo3D.collider.gameObject, m_data.m_laserMaterial);
 						}
 
                         /*
