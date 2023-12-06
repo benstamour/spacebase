@@ -17,6 +17,9 @@ public class CircuitTile : MonoBehaviour
 	[SerializeField] private float toRotate = 0f;
 	[SerializeField] private static float rotateSpeed = 50f;
 	[SerializeField] private bool isSource = false;
+	[SerializeField] private bool isTarget = false;
+	[SerializeField] private int targetColour = -1;
+	private bool isComplete = false;
 	
     // Start is called before the first frame update
     void Start()
@@ -53,16 +56,23 @@ public class CircuitTile : MonoBehaviour
 				ledNodeScript.updateOnTimerSpeed(2.0f);
 				ledNodeScript.updateOffTimerSpeed(0f);
 			}
-			for(int i = 0; i < lasers.Length; i++)
+			if(!isTarget)
 			{
-				LaserMachine laserScript = lasers[i].GetComponent<LaserMachine>();
-				Transform lineRenderer = lasers[i].transform.Find("lineRenderer_0");
-				if(lineRenderer != null)
+				for(int i = 0; i < lasers.Length; i++)
 				{
-					Destroy(lineRenderer.gameObject);
-					laserScript.RemoveLasers();
+					LaserMachine laserScript = lasers[i].GetComponent<LaserMachine>();
+					Transform lineRenderer = lasers[i].transform.Find("lineRenderer_0");
+					if(lineRenderer != null)
+					{
+						Destroy(lineRenderer.gameObject);
+						laserScript.RemoveLasers();
+					}
+					lasers[i].SetActive(false);
 				}
-				lasers[i].SetActive(false);
+			}
+			else
+			{
+				this.isComplete = false;
 			}
 		}
 	}
@@ -81,29 +91,72 @@ public class CircuitTile : MonoBehaviour
 				{
 					this.colour = laserMaterial.name;
 					newColour = laserMaterial.color;
-					for(int i = 0; i < lasers.Length; i++)
+					if(!isTarget)
 					{
-						LaserMachine laserScript = lasers[i].GetComponent<LaserMachine>();
-						Transform lineRenderer = lasers[i].transform.Find("lineRenderer_0");
-						if(lineRenderer != null)
+						for(int i = 0; i < lasers.Length; i++)
 						{
-							Destroy(lineRenderer.gameObject);
-							laserScript.RemoveLasers();
+							LaserMachine laserScript = lasers[i].GetComponent<LaserMachine>();
+							Transform lineRenderer = lasers[i].transform.Find("lineRenderer_0");
+							if(lineRenderer != null)
+							{
+								Destroy(lineRenderer.gameObject);
+								laserScript.RemoveLasers();
+							}
+							
+							lasers[i].SetActive(false);
+							if(this.colour == "Laser_CYAN")
+							{
+								laserScript.m_data = cyanLaserObj;
+							}
+							else if(this.colour == "Laser_PINK")
+							{
+								laserScript.m_data = magentaLaserObj;
+							}
+							else if(this.colour == "Laser_YELLOW")
+							{
+								laserScript.m_data = yellowLaserObj;
+							}
 						}
-						
-						lasers[i].SetActive(false);
-						if(this.colour == "Laser_CYAN")
+					}
+				}
+				if(this.isTarget)
+				{
+					if(this.colour == "Laser_CYAN")
+					{
+						if(this.targetColour == 0)
 						{
-							laserScript.m_data = cyanLaserObj;
+							this.isComplete = true;
 						}
-						else if(this.colour == "Laser_PINK")
+						else
 						{
-							laserScript.m_data = magentaLaserObj;
+							this.isComplete = false;
 						}
-						else if(this.colour == "Laser_YELLOW")
+					}
+					else if(this.colour == "Laser_PINK")
+					{
+						if(this.targetColour == 1)
 						{
-							laserScript.m_data = yellowLaserObj;
+							this.isComplete = true;
 						}
+						else
+						{
+							this.isComplete = false;
+						}
+					}
+					else if(this.colour == "Laser_YELLOW")
+					{
+						if(this.targetColour == 2)
+						{
+							this.isComplete = true;
+						}
+						else
+						{
+							this.isComplete = false;
+						}
+					}
+					else
+					{
+						this.isComplete = false;
 					}
 				}
 				firstNode = node.name;
@@ -132,8 +185,11 @@ public class CircuitTile : MonoBehaviour
 						}
 						ledNodeScript.toggle(true);
 					}
-					lasers[0].SetActive(false);
-					StartCoroutine(laserDelay(lasers[1]));
+					if(!isTarget)
+					{
+						lasers[0].SetActive(false);
+						StartCoroutine(laserDelay(lasers[1]));
+					}
 				}
 				else if(node.name == "Node 2")
 				{
@@ -158,8 +214,11 @@ public class CircuitTile : MonoBehaviour
 						}
 						ledNodeScript.toggle(true);
 					}
-					lasers[1].SetActive(false);
-					StartCoroutine(laserDelay(lasers[0]));
+					if(!isTarget)
+					{
+						lasers[1].SetActive(false);
+						StartCoroutine(laserDelay(lasers[0]));
+					}
 				}
 			}
 		}
@@ -174,5 +233,10 @@ public class CircuitTile : MonoBehaviour
 	public void addToRotation(float f)
 	{
 		this.toRotate += f;
+	}
+	
+	public bool getComplete()
+	{
+		return this.isComplete;
 	}
 }
