@@ -16,6 +16,7 @@ public class CircuitTile : MonoBehaviour
 	[SerializeField] private LaserData yellowLaserObj;
 	[SerializeField] private float toRotate = 0f;
 	[SerializeField] private static float rotateSpeed = 50f;
+	[SerializeField] private bool isSource = false;
 	
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,7 @@ public class CircuitTile : MonoBehaviour
 	{
 		if(this.toRotate > 0)
 		{
-			float amount = Mathf.Min(toRotate, rotateSpeed*Time.deltaTime);
+			float amount = Mathf.Min(this.toRotate, rotateSpeed*Time.deltaTime);
 			gameObject.transform.Rotate(new Vector3(0,amount,0));
 			this.toRotate -= amount;
 		}
@@ -41,7 +42,7 @@ public class CircuitTile : MonoBehaviour
 	
 	void LateUpdate()
 	{
-		if(this.timer <= 0)
+		if(this.timer <= 0 && !this.isSource)
 		{
 			this.on = false;
 			this.firstNode = null;
@@ -68,7 +69,7 @@ public class CircuitTile : MonoBehaviour
 	
 	public void Activate(GameObject node, Material laserMaterial)
 	{
-		if(node.name == "Node 1" || node.name == "Node 2")
+		if((node.name == "Node 1" || node.name == "Node 2") && !this.isSource)
 		{
 			this.timer = 0.5f;
 			

@@ -28,7 +28,7 @@ public class Button : MonoBehaviour
 	private float risingPlatformProgress = 0f;
 	
 	// for circuit tiles
-	[SerializeField] private GameObject circuitTile;
+	//[SerializeField] private GameObject circuitTile;
 	
 	[SerializeField] private int id = 1;
 
@@ -136,7 +136,8 @@ public class Button : MonoBehaviour
 		}
 		if(this.id >= 4)
 		{
-			this.circuitTile.GetComponent<CircuitTile>().addToRotation(90f);
+			GameObject circuitTile = gameObject.transform.parent.parent.gameObject;
+			circuitTile.GetComponent<CircuitTile>().addToRotation(90f);
 		}
 	}
 }

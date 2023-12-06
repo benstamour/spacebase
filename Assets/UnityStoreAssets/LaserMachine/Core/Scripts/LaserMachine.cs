@@ -161,7 +161,7 @@ public class LaserMachine : MonoBehaviour {
 						}
 						else if(hitInfo3D.collider.gameObject.transform.parent != null && hitInfo3D.collider.gameObject.transform.parent.gameObject.tag == "CircuitTile")
 						{
-							//Debug.Log(m_data.m_laserMaterial.color);
+							//Debug.Log(hitInfo3D.collider.gameObject.transform.parent.gameObject.name);
 							CircuitTile circuitTileScript = hitInfo3D.collider.gameObject.transform.parent.gameObject.GetComponent<CircuitTile>();
 							circuitTileScript.Activate(hitInfo3D.collider.gameObject, m_data.m_laserMaterial);
 						}
