@@ -46,6 +46,10 @@ public class CharacterPlatform : MonoBehaviour
 			{
 				gameObject.transform.parent = hit.collider.gameObject.transform.parent;
 			}
+			else if(hit.collider.gameObject.tag == "Elevator" && hit.distance <= 0.5f)
+			{
+				gameObject.transform.parent = hit.collider.gameObject.transform;
+			}
 			/*if(hit.collider.gameObject.name == "Cylinder" && hit.distance <= 0.5f)
 			{
 				CharacterController characterController = gameObject.GetComponent<CharacterController>();

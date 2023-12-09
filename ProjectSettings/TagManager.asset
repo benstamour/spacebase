@@ -10,6 +10,7 @@ TagManager:
   - MovingPlatform
   - HoloTile
   - CircuitTile
+  - Elevator
   layers:
   - Default
   - TransparentFX

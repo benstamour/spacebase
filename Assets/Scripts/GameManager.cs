@@ -77,6 +77,11 @@ public class GameManager : MonoBehaviour
 		GameObject door = GameObject.Find("Second Door");
 		Animator anim = door.GetComponent<Animator>();
 		anim.SetBool("character_nearby", true);
+		
+		// open door to elevator
+		door = GameObject.Find("Seventh Door");
+		anim = door.GetComponent<Animator>();
+		anim.SetBool("character_nearby", true);
     }
 
     // Update is called once per frame
