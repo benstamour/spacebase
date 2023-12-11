@@ -20,7 +20,6 @@ public class ColourCode : MonoBehaviour
 		this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         this.code = gameManagerScript.getColourCode();
 		this.screen = GameObject.Find("Light-Up Screen");
-		Debug.Log(this.code);
 		
 		// remove unneeded colour code icons
 		for(int i = 0; i < this.code.Length; i++)

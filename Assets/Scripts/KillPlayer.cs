@@ -44,4 +44,12 @@ public class KillPlayer : MonoBehaviour
 	{
 		Respawn();
 	}
+	
+	void OnParticleCollision(GameObject other)
+	{
+		if(other.tag == "DeathZone")
+		{
+			Respawn();
+		}
+	}
 }

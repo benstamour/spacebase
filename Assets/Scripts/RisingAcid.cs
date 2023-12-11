@@ -8,6 +8,7 @@ public class RisingAcid : MonoBehaviour
 	private Vector3 startPos;
 	[SerializeField] private float riseAmount;
 	[SerializeField] private float speed;
+	[SerializeField] private GameObject door;
 	
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,25 @@ public class RisingAcid : MonoBehaviour
 	
 	public void triggerAcid()
 	{
-		this.activated = true;
+		StartCoroutine(CloseDoor());
+		//this.activated = true;
+	}
+	
+	IEnumerator CloseDoor()
+	{
+		if(this.activated == false)
+		{
+			this.activated = true; // trigger acid
+			float doorMove = 1.5f;
+			float doorSpeed = 2f;
+			Vector3 doorPos = door.transform.position;
+			Vector3 curDoorPos = doorPos;
+			while(curDoorPos.z <= doorPos.z + doorMove)
+			{
+				curDoorPos = door.transform.position;
+				door.transform.position = new Vector3(curDoorPos.x, curDoorPos.y, curDoorPos.z + doorMove*Time.deltaTime*doorSpeed);
+				yield return null;
+			}
+		}
 	}
 }
