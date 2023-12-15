@@ -29,7 +29,7 @@ public class Character : MonoBehaviour
 	private GameManager gameManagerScript;
 	
 	// data for animations
-	public Animator animator;
+	private Animator animator; // prev. public;
 	private bool isJumping = false;
 	private bool isWalkingForward = false;
 	private bool isWalkingBackward = false;
@@ -47,6 +47,7 @@ public class Character : MonoBehaviour
 		this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 		this.gameManagerScript.incrementAttempts();
 		this.multiplier = this.scaleVal/1.5f;
+		this.animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
