@@ -4,5 +4,23 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/BootstrapScene.unity
+    guid: 9f12910f948aa9c44915767cb554691e
+  - enabled: 1
+    path: Assets/Scenes/Arena.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/CharSelectScreen.unity
+    guid: bfd375f20a3cafa429be36f0132013da
+  - enabled: 1
+    path: Assets/Scenes/CharSelectScreen2.unity
+    guid: c46f8a5858d319f458788407a9dd4853
+  - enabled: 1
+    path: Assets/Scenes/InstructionsScreen.unity
+    guid: bad8e2f90872a684a94ed5504933245e
+  - enabled: 1
+    path: Assets/Scenes/StartScreen.unity
+    guid: 33d0f3df3fdd4424f8f4dc6d1a52f1cd
   m_configObjects: {}

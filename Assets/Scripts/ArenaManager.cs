@@ -6,19 +6,21 @@ using UnityEngine;
 public class ArenaManager : MonoBehaviour
 {
 	// character prefabs
-	public GameObject serazPrefab;
+	public GameObject[] charPrefabs;
+	/*public GameObject serazPrefab;
 	public GameObject aestaPrefab;
 	public GameObject gavaanPrefab;
-	public GameObject xaleriePrefab;
+	public GameObject xaleriePrefab;*/
 	
 	// orb prefabs
-	public GameObject blueOrbPrefab;
+	public GameObject[] orbPrefabs;
+	/*public GameObject blueOrbPrefab;
 	public GameObject pinkOrbPrefab;
 	public GameObject greenOrbPrefab;
-	public GameObject purpleOrbPrefab;
+	public GameObject purpleOrbPrefab;*/
 	
 	private GameManager gameManagerScript;
-	[SerializeField] private string character;
+	[SerializeField] private int character;
 	
 	// start position
 	[SerializeField] private float startX;
@@ -35,6 +37,7 @@ public class ArenaManager : MonoBehaviour
 	
 	public GameObject[] savePoints = new GameObject[6]; // save point array
 	public GameObject[] orbs = new GameObject[6]; // orb array
+	[SerializeField] private Vector3[] orbLocations; // locations of each orb
 	[SerializeField] private bool[] orbsCollected = new bool[6]; // which orbs are collected by the player?
 	
 	public Canvas pauseScreen; // pause screen
@@ -119,15 +122,15 @@ public class ArenaManager : MonoBehaviour
 		catch
 		{
 			// this block should only be executed during testing
-			var charList = new List<string>{"Gavaan","Xalerie","Seraz","Aesta"};
-			int index = Random.Range(0, charList.Count);
-			this.character = charList[index];
+			this.character = Random.Range(0, charPrefabs.Length);
 		}
 		
 		// instantiates chosen character at starting location
 		GameObject charPrefab;
 		GameObject orbPrefab;
-		switch(this.character)
+		charPrefab = charPrefabs[this.character];
+		orbPrefab = orbPrefabs[this.character];
+		/*switch(this.character)
 		{
 			case "Seraz":
 			{
@@ -159,9 +162,11 @@ public class ArenaManager : MonoBehaviour
 				orbPrefab = blueOrbPrefab;
 				break;
 			}
-		}
+		}*/
 		//foreach(GameObject orb in orbs)
-		for(int i = 0; i < this.orbs.Length; i++)
+		
+		
+		/*for(int i = 0; i < this.orbs.Length; i++)
 		{
 			GameObject orb = this.orbs[i];
 			//Transform transform = orb.transform;
@@ -171,6 +176,12 @@ public class ArenaManager : MonoBehaviour
 			//Collectible newOrbScript = newOrb.GetComponent<Collectible>();
 			//newOrbScript.setID(i);
 			orb.SetActive(false);
+		}*/
+		for(int i = 0; i < this.orbLocations.Length; i++)
+		{
+			Vector3 position = orbLocations[i];
+			this.orbs[i] = Instantiate(orbPrefab, position, Quaternion.identity);
+			this.orbs[i].transform.localScale = new Vector3(1,1,1)*0.667f;
 		}
 		Instantiate(charPrefab, startLoc, Quaternion.Euler(0,yRot,0));
 	}

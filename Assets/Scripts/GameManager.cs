@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
 	//private float timeTaken = 0f; // total time taken in successful run
 	private float savePointTime = 0f; // cumulative time to get to each save point and the end zone; does not include time beyond save points that resulted in character being killed
 	[SerializeField] private int numAttempts = 0; // total number of attempts taken
-	[SerializeField] private string character = "";
+	//[SerializeField] private string character = "";
+	[SerializeField] private int character;
 	
 	[SerializeField] private int spawnPoint = -1; // save point that character should spawn at; -1 for beginning location
 	[SerializeField] private float spawnRot = 0; // rotation of player when spawning
@@ -43,7 +44,10 @@ public class GameManager : MonoBehaviour
 	void Awake()
 	{
 		DontDestroyOnLoad(transform.gameObject);
-		//this.LoadStartScreen();
+		if(SceneManager.GetActiveScene().name == "BootstrapScene")
+		{
+			this.LoadStartScreen();
+		}
 		
 		// move the below code to the ARENA MANAGER after making it
 		this.introcode = UnityEngine.Random.Range(1000,10000);
@@ -90,7 +94,7 @@ public class GameManager : MonoBehaviour
         
     }
 	
-	public void SetCharacter(string character)
+	public void SetCharacter(int character)
 	{
 		this.character = character;
 	}
@@ -149,7 +153,7 @@ public class GameManager : MonoBehaviour
 	
 	public void LoadStartScreen()
 	{
-		SceneManager.LoadScene("Start Screen");
+		SceneManager.LoadScene("StartScreen");
 		
 		// reset variables
 		this.score = 0;
@@ -173,7 +177,7 @@ public class GameManager : MonoBehaviour
 	public void StartGame()
 	{
 		this.spawnPoint = -1;
-		SceneManager.LoadScene("Air Arena");
+		SceneManager.LoadScene("Arena");
 		
 		// play arena soundtrack
 		StartCoroutine(CheckArenaLoaded());
@@ -187,7 +191,7 @@ public class GameManager : MonoBehaviour
 	public void EndZone()
 	{
 		this.gameTotalTime = Time.time - this.gameStartTime;
-		SceneManager.LoadScene("End Screen");
+		SceneManager.LoadScene("EndScreen");
 		
 		AudioSource audioSource = this.audioSource1;
 		audioSource.Stop();
@@ -206,7 +210,7 @@ public class GameManager : MonoBehaviour
 		return this.numAttempts;
 	}
 	
-	public string getChar()
+	public int getChar()
 	{
 		return this.character;
 	}
