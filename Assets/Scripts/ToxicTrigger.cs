@@ -6,6 +6,8 @@ public class ToxicTrigger : MonoBehaviour
 {
 	private bool activated = false;
 	
+	[SerializeField] private GameObject[] hideRooms;
+	
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,12 @@ public class ToxicTrigger : MonoBehaviour
 		if(other.gameObject.tag == "Character" && activated == false)
 		{
 			activated = true;
+			
+			for(int i = 0; i < this.hideRooms.Length; i++)
+			{
+				hideRooms[i].SetActive(false);
+			}
+			
 			RisingAcid acidScript = GameObject.Find("Acid Sphere").GetComponent<RisingAcid>();
 			acidScript.triggerAcid();
 		}

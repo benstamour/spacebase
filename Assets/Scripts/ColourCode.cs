@@ -14,6 +14,8 @@ public class ColourCode : MonoBehaviour
 	
 	private GameObject screen;
 	
+	[SerializeField] private GameObject[] unhideRooms;
+	
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +71,11 @@ public class ColourCode : MonoBehaviour
 				GameObject door = GameObject.Find("Third Door");
 				Animator anim = door.GetComponent<Animator>();
 				anim.SetBool("character_nearby", true);
+				
+				for(int i = 0; i < this.unhideRooms.Length; i++)
+				{
+					unhideRooms[i].SetActive(true);
+				}
 			}
 			else
 			{

@@ -43,7 +43,7 @@ public class Lever : MonoBehaviour
 	public void activate()
 	{
 		string[] colours = {"Cyan", "Magenta", "Yellow"};
-		if(activated == false && (this.id == 1 || this.id >= 4 || GameObject.Find(colours[this.id-2] + " Blocking Laser") == null))
+		if(true)//activated == false && (this.id == 1 || this.id >= 4 || GameObject.Find(colours[this.id-2] + " Blocking Laser") == null))
 		{
 			anim.SetBool("LeverUp", false); // triggers lever animation
 			activated = true;

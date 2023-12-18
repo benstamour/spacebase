@@ -78,14 +78,14 @@ public class GameManager : MonoBehaviour
 		// move the below code to the ARENA MANAGER after making it
 		
 		// open door after spikeball area
-		GameObject door = GameObject.Find("Second Door");
+		/*GameObject door = GameObject.Find("Second Door");
 		Animator anim = door.GetComponent<Animator>();
 		anim.SetBool("character_nearby", true);
 		
 		// open door to elevator
 		door = GameObject.Find("Seventh Door");
 		anim = door.GetComponent<Animator>();
-		anim.SetBool("character_nearby", true);
+		anim.SetBool("character_nearby", true);*/
     }
 
     // Update is called once per frame

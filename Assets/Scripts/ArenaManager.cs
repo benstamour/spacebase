@@ -43,6 +43,8 @@ public class ArenaManager : MonoBehaviour
 	public Canvas pauseScreen; // pause screen
 	private bool paused = false; // is the game paused?
 	
+	[SerializeField] private GameObject[] rooms;
+	
 	//public int curOrbID = 0; // for instantiating orbs to ensure each has unique ID
 	
 	void Awake()
@@ -90,7 +92,7 @@ public class ArenaManager : MonoBehaviour
 		{
 			// set start location according to last save point reached and remove all previous save points
 			int spawnID = gameManagerScript.getSpawnPoint();
-			startLoc = this.savePoints[spawnID].transform.position + Vector3.down*1.995f;
+			startLoc = this.savePoints[spawnID].transform.position + Vector3.down;//*1.995f;
 			yRot = gameManagerScript.getSpawnRotation();
 			for(int i = 0; i <= spawnID; i++)
 			{
@@ -114,7 +116,7 @@ public class ArenaManager : MonoBehaviour
 			
         try
 		{
-			this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+			//this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 			
 			// gets chosen character from game manager
 			this.character = gameManagerScript.getChar();
@@ -189,6 +191,72 @@ public class ArenaManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		int spawnPoint = gameManagerScript.getSpawnPoint();
+		if(spawnPoint < 1)
+		{
+			// open door after spikeball area
+			GameObject door = GameObject.Find("Second Door");
+			Animator anim = door.GetComponent<Animator>();
+			anim.SetBool("character_nearby", true);
+		}
+		if(spawnPoint == 4) // this also needs to open when elevator shaft is unhidden
+		{
+			// open door to elevator
+			GameObject door = GameObject.Find("Seventh Door");
+			Animator anim = door.GetComponent<Animator>();
+			anim.SetBool("character_nearby", true);
+		}
+		
+		if(spawnPoint < 2)
+		{
+			for(int i = 8; i < rooms.Length; i++)
+			{
+				rooms[i].SetActive(false);
+			}
+		}
+		else if(spawnPoint >= 6)
+		{
+			for(int i = 0; i <= 9; i++)
+			{
+				rooms[i].SetActive(false);
+			}
+		}
+		else if(spawnPoint == 5)
+		{
+			for(int i = 0; i <= 7; i++)
+			{
+				rooms[i].SetActive(false);
+			}
+		}
+		else if(spawnPoint == 4)
+		{
+			for(int i = 0; i <= 2; i++)
+			{
+				rooms[i].SetActive(false);
+			}
+			for(int i = 10; i <= rooms.Length; i++)
+			{
+				rooms[i].SetActive(false);
+			}
+		}
+		else
+		{
+			for(int i = 9; i < rooms.Length; i++)
+			{
+				rooms[i].SetActive(false);
+			}
+		}
+		
+		// 0: before swinging spikeballs
+		// 1: before LED platforms
+		// 2: before spinning laser circle/holotiles
+		// 3: before gravity switch
+		// 4: before circuit tiles
+		// 5: before saws
+		// 6: before warehouse
+		// 7: before final room
+		
+		
 		// disable pause screen and make sure scene is not paused
 		this.pauseScreen.enabled = false;
     }

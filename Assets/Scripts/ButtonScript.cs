@@ -101,13 +101,13 @@ public class ButtonScript : MonoBehaviour
 	{
 		this.gameManagerScript.ToggleVolume();
 		TextMeshProUGUI textComponent = GameObject.Find("SoundButton").GetComponentInChildren<TextMeshProUGUI>();
-		if(textComponent.text == "Sound ON")
+		if(textComponent.text == "SOUND ON")
 		{
-			textComponent.text = "Sound OFF";
+			textComponent.text = "SOUND OFF";
 		}
 		else
 		{
-			textComponent.text = "Sound ON";
+			textComponent.text = "SOUND ON";
 		}
 	}
 	
@@ -116,13 +116,13 @@ public class ButtonScript : MonoBehaviour
 	{
 		this.gameManagerScript.ToggleSavePoints();
 		TextMeshProUGUI textComponent = GameObject.Find("SavePointButton").GetComponentInChildren<TextMeshProUGUI>();
-		if(textComponent.text == "Save Points ON")
+		if(textComponent.text == "SAVE POINTS ON")
 		{
-			textComponent.text = "Save Points OFF";
+			textComponent.text = "SAVE POINTS OFF";
 		}
 		else
 		{
-			textComponent.text = "Save Points ON";
+			textComponent.text = "SAVE POINTS ON";
 		}
 	}
 }

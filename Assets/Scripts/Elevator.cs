@@ -8,6 +8,9 @@ public class Elevator : MonoBehaviour
 	[SerializeField] private float speed = 1f;
 	private bool activated = false;
 	
+	[SerializeField] private GameObject[] unhideRooms;
+	[SerializeField] private GameObject[] hideRooms;
+	
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +32,15 @@ public class Elevator : MonoBehaviour
 			GameObject door = GameObject.Find("Seventh Door");
 			Animator anim = door.GetComponent<Animator>();
 			anim.SetBool("character_nearby", false);
+			
+			for(int i = 0; i < this.unhideRooms.Length; i++)
+			{
+				unhideRooms[i].SetActive(true);
+			}
+			for(int i = 0; i < this.hideRooms.Length; i++)
+			{
+				hideRooms[i].SetActive(false);
+			}
 			
 			StartCoroutine(Descend());
 		}
