@@ -21,6 +21,8 @@ public class Lever : MonoBehaviour
 	[SerializeField] private GameObject cyanLasers;
 	[SerializeField] private GameObject magentaLasers;
 	[SerializeField] private GameObject yellowLasers;
+	
+	[SerializeField] private GameObject extraLasers;
 
 	// Start is called before the first frame update
 	void Start()
@@ -205,6 +207,12 @@ public class Lever : MonoBehaviour
 				GameObject door = GameObject.Find("Fifth Door");
 				Animator anim = door.GetComponent<Animator>();
 				anim.SetBool("character_nearby", true);
+				
+				door = GameObject.Find("Secret Door");
+				anim = door.GetComponent<Animator>();
+				anim.SetBool("character_nearby", true);
+				
+				extraLasers.SetActive(true);
 			}
 			else if(this.id == 5)
 			{

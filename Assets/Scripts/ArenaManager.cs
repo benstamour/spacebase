@@ -85,7 +85,7 @@ public class ArenaManager : MonoBehaviour
 			
 			if(gameManagerScript.getCurArenaMusic() > 0)
 			{
-				gameManagerScript.triggerMainArenaMusic();
+				gameManagerScript.triggerIntroMusic();
 			}
 		}
 		else
@@ -99,13 +99,25 @@ public class ArenaManager : MonoBehaviour
 				this.savePoints[i].SetActive(false);
 			}
 			
-			if(gameManagerScript.getCurArenaMusic() > 0 && spawnID < 2) // second arena soundtrack starts at save point 2
+			if(gameManagerScript.getCurArenaMusic() > 0 && spawnID < 1) // second arena soundtrack starts at save point 1
 			{
-				gameManagerScript.triggerMainArenaMusic();
+				gameManagerScript.triggerIntroMusic();
 			}
-			else if(gameManagerScript.getCurArenaMusic() > 1 && spawnID < 3) // third arena soundtrack starts just after save point 3
+			else if(gameManagerScript.getCurArenaMusic() > 1 && spawnID < 2) // third arena soundtrack starts at save point 2
 			{
-				gameManagerScript.triggerTreeMusic();
+				gameManagerScript.triggerNeonMusic();
+			}
+			else if(gameManagerScript.getCurArenaMusic() > 2 && spawnID < 4) // fourth arena soundtrack starts at save point 4
+			{
+				gameManagerScript.triggerHoloMusic();
+			}
+			else if(gameManagerScript.getCurArenaMusic() > 3 && spawnID < 5) // fifth arena soundtrack starts at save point 5
+			{
+				gameManagerScript.triggerCircuitMusic();
+			}
+			else if(gameManagerScript.getCurArenaMusic() > 4) // sixth arena soundtrack starts after last save point
+			{
+				gameManagerScript.triggerWarehouseMusic();
 			}
 		}
 		
@@ -168,7 +180,7 @@ public class ArenaManager : MonoBehaviour
 		//foreach(GameObject orb in orbs)
 		
 		
-		/*for(int i = 0; i < this.orbs.Length; i++)
+		for(int i = 0; i < this.orbs.Length; i++)
 		{
 			GameObject orb = this.orbs[i];
 			//Transform transform = orb.transform;
@@ -178,13 +190,13 @@ public class ArenaManager : MonoBehaviour
 			//Collectible newOrbScript = newOrb.GetComponent<Collectible>();
 			//newOrbScript.setID(i);
 			orb.SetActive(false);
-		}*/
-		for(int i = 0; i < this.orbLocations.Length; i++)
+		}
+		/*for(int i = 0; i < this.orbLocations.Length; i++)
 		{
 			Vector3 position = orbLocations[i];
 			this.orbs[i] = Instantiate(orbPrefab, position, Quaternion.identity);
 			this.orbs[i].transform.localScale = new Vector3(1,1,1)*0.667f;
-		}
+		}*/
 		Instantiate(charPrefab, startLoc, Quaternion.Euler(0,yRot,0));
 	}
 	

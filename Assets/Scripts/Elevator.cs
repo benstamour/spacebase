@@ -43,6 +43,9 @@ public class Elevator : MonoBehaviour
 			}
 			
 			StartCoroutine(Descend());
+			
+			GameManager gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+			gameManagerScript.triggerWarehouseMusic();
 		}
 	}
 	

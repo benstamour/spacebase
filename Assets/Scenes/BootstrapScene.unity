@@ -161,14 +161,17 @@ MonoBehaviour:
   character: 0
   spawnPoint: -1
   spawnRot: 0
-  menuSoundtrack: {fileID: 0}
-  arenaSoundtrack: {fileID: 0}
-  flyingTreeSoundtrack: {fileID: 0}
-  angelStatueSoundtrack: {fileID: 0}
+  menuSoundtrack: {fileID: 8300000, guid: 5b74db5fe4eaaee489ba375d3a656d09, type: 3}
+  introSoundtrack: {fileID: 8300000, guid: 132a401c732fe4a82abb758b873177be, type: 3}
+  neonSoundtrack: {fileID: 8300000, guid: 645d008df7e34354885d03313372e7be, type: 3}
+  holoSoundtrack: {fileID: 8300000, guid: 9460a26f83a88474eba3e8ace366521a, type: 3}
+  circuitSoundtrack: {fileID: 8300000, guid: 8d13a328577824b4d96c5ef187d3efc1, type: 3}
+  warehouseSoundtrack: {fileID: 8300000, guid: bda4649832106be47be70035ee91db08, type: 3}
+  battleSoundtrack: {fileID: 8300000, guid: 5f453216d3ff442dfb9044b98e021067, type: 3}
   buttonClip: {fileID: 8300000, guid: 50861ff83c3a47142bb397f7cf079c06, type: 3}
   orbClip: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
-  leverClip: {fileID: 0}
-  endZoneClip: {fileID: 0}
+  leverClip: {fileID: 8300000, guid: 6e134bd7c8288604a9558744e15fcf4b, type: 3}
+  endZoneClip: {fileID: 8300000, guid: 2707a27c68052a2438ccd4bab6a19c68, type: 3}
   audioSource1: {fileID: 102889867}
   audioSource2: {fileID: 102889866}
   volume: 1

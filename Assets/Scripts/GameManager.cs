@@ -20,9 +20,12 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private float spawnRot = 0; // rotation of player when spawning
 	
 	public AudioClip menuSoundtrack;
-	public AudioClip arenaSoundtrack;
-	public AudioClip flyingTreeSoundtrack;
-	public AudioClip angelStatueSoundtrack;
+	public AudioClip introSoundtrack;
+	public AudioClip neonSoundtrack;
+	public AudioClip holoSoundtrack;
+	public AudioClip circuitSoundtrack;
+	public AudioClip warehouseSoundtrack;
+	public AudioClip battleSoundtrack;
 	public AudioClip buttonClip;
 	public AudioClip orbClip;
 	public AudioClip leverClip;
@@ -198,6 +201,11 @@ public class GameManager : MonoBehaviour
 		audioSource.clip = endZoneClip;
 		audioSource.loop = false;
 		audioSource.Play();
+		
+		if(this.audioSource1.volume > 0)
+		{
+			this.audioSource1.volume = 1;
+		}
 	}
 	
 	public void incrementAttempts()
@@ -301,12 +309,12 @@ public class GameManager : MonoBehaviour
 	{
 		while(true)
 		{
-			if(SceneManager.GetActiveScene().name == "Air Arena")
+			if(SceneManager.GetActiveScene().name == "Arena")
 			{
 				// play arena soundtrack
 				AudioSource audioSource = this.audioSource1;
 				audioSource.Stop();
-				audioSource.clip = arenaSoundtrack;
+				audioSource.clip = introSoundtrack;
 				audioSource.loop = true;
 				audioSource.Play();
 				this.curArenaMusic = 0;
@@ -320,40 +328,106 @@ public class GameManager : MonoBehaviour
 		this.gameStartTime = Time.time;
 	}
 	
-	public void triggerMainArenaMusic()
+	public void triggerIntroMusic()
 	{
 		if(this.curArenaMusic != 0)
 		{
 			AudioSource audioSource = this.audioSource1;
 			audioSource.Stop();
-			audioSource.clip = arenaSoundtrack;
+			audioSource.clip = introSoundtrack;
 			audioSource.loop = true;
 			audioSource.Play();
 			this.curArenaMusic = 0;
+			
+			if(this.audioSource1.volume > 0)
+			{
+				this.audioSource1.volume = 1;
+			}
 		}
 	}
-	public void triggerTreeMusic()
+	public void triggerNeonMusic()
 	{
 		if(this.curArenaMusic != 1)
 		{
 			AudioSource audioSource = this.audioSource1;
 			audioSource.Stop();
-			audioSource.clip = flyingTreeSoundtrack;
+			audioSource.clip = circuitSoundtrack;
 			audioSource.loop = true;
 			audioSource.Play();
 			this.curArenaMusic = 1;
+			
+			if(this.audioSource1.volume > 0)
+			{
+				this.audioSource1.volume = 1;
+			}
 		}
 	}
-	public void triggerAngelMusic()
+	public void triggerHoloMusic()
 	{
 		if(this.curArenaMusic != 2)
 		{
 			AudioSource audioSource = this.audioSource1;
 			audioSource.Stop();
-			audioSource.clip = angelStatueSoundtrack;
+			audioSource.clip = holoSoundtrack;
 			audioSource.loop = true;
 			audioSource.Play();
 			this.curArenaMusic = 2;
+			
+			if(this.audioSource1.volume > 0)
+			{
+				this.audioSource1.volume = 1;
+			}
+		}
+	}
+	public void triggerCircuitMusic()
+	{
+		if(this.curArenaMusic != 3)
+		{
+			AudioSource audioSource = this.audioSource1;
+			audioSource.Stop();
+			audioSource.clip = circuitSoundtrack;
+			audioSource.loop = true;
+			audioSource.Play();
+			this.curArenaMusic = 3;
+			
+			if(this.audioSource1.volume > 0)
+			{
+				this.audioSource1.volume = 1;
+			}
+		}
+	}
+	public void triggerWarehouseMusic()
+	{
+		if(this.curArenaMusic != 4)
+		{
+			AudioSource audioSource = this.audioSource1;
+			audioSource.Stop();
+			audioSource.clip = warehouseSoundtrack;
+			audioSource.loop = true;
+			audioSource.Play();
+			this.curArenaMusic = 4;
+			
+			if(this.audioSource1.volume > 0)
+			{
+				this.audioSource1.volume = 1;
+			}
+		}
+	}
+	public void triggerBattleMusic()
+	{
+		if(this.curArenaMusic != 5)
+		{
+			AudioSource audioSource = this.audioSource1;
+			audioSource.Stop();
+			audioSource.clip = battleSoundtrack;
+			audioSource.loop = true;
+			audioSource.Play();
+			this.curArenaMusic = 5;
+			
+			if(this.audioSource1.volume > 0)
+			{
+				this.audioSource1.volume = 0.3f;
+			}
 		}
 	}
 	public int getCurArenaMusic()

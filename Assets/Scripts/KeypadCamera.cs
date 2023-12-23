@@ -80,7 +80,7 @@ public class KeypadCamera : MonoBehaviour
 	private bool NearView()
     {
         distance = Vector3.Distance(transform.position, this.character.transform.position);
-		if(distance <= 3f)
+		if(distance <= 2f)
 		{
 			return true;
 		}

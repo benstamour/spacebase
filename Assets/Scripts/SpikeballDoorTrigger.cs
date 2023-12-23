@@ -26,6 +26,9 @@ public class SpikeballDoorTrigger : MonoBehaviour
 			GameObject door = GameObject.Find("Second Door");
 			Animator anim = door.GetComponent<Animator>();
 			anim.SetBool("character_nearby", false);
+			
+			GameManager gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+			gameManagerScript.triggerNeonMusic();
 		}
 	}
 }

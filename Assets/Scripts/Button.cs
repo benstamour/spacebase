@@ -82,7 +82,7 @@ public class Button : MonoBehaviour
 	private bool NearView()
     {
         distance = Vector3.Distance(transform.position, this.character.transform.position);
-		if(distance <= 3f)
+		if(distance <= 1.5f)
 		{
 			return true;
 		}

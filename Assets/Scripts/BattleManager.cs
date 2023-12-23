@@ -141,7 +141,7 @@ public class BattleManager : MonoBehaviour
 	
 	private int[] generateLaserCircleSequence()
 	{
-		int[] circleSpawns = new int[numSmashes];
+		int[] circleSpawns = new int[numCircles];
 		for(int i = 0; i < numSmashes; i++)
 		{
 			circleSpawns[i] = UnityEngine.Random.Range(0, laserCircles.Length);
@@ -247,6 +247,9 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		robotSphere.SetActive(false);
+		
+		GameManager gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+		gameManagerScript.triggerBattleMusic();
 		
 		StartCoroutine(ramStab(generateRamSequence(), 0));
 	}
