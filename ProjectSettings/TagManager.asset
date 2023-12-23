@@ -11,6 +11,9 @@ TagManager:
   - HoloTile
   - CircuitTile
   - Elevator
+  - Collectible
+  - SavePoint
+  - EndZone
   layers:
   - Default
   - TransparentFX

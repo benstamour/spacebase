@@ -6,6 +6,9 @@ public class BattleManager : MonoBehaviour
 {
 	private bool activated = false;
 	
+	// DOOR
+	[SerializeField] GameObject door;
+	
 	// ENTRY SINK
 	[SerializeField] GameObject entryTiles;
 	[SerializeField] float sinkSpeed = 1;
@@ -49,6 +52,17 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] Vector3 spikeDropDist = new Vector3(0, -7.875f, 0);
 	[SerializeField] GameObject colourLights;
 	
+	// ROBOT SPHERE
+	[SerializeField] GameObject robotSphere;
+	[SerializeField] GameObject robotSphereClosed;
+	[SerializeField] float robotSpeed;
+	[SerializeField] Vector3 robotFloorMidDist = new Vector3(0, 1f, 0);
+	[SerializeField] Vector3 robotMidCeilingDist = new Vector3(0, 8f, 0);
+	
+	// FINAL PLATFORM
+	[SerializeField] GameObject portalPlatform;
+	[SerializeField] float portalSpeed;
+	[SerializeField] Vector3 portalDist = new Vector3(0, 4, 0);
 	
     // Start is called before the first frame update
     void Start()
@@ -68,11 +82,12 @@ public class BattleManager : MonoBehaviour
 		{
 			activated = true;
 			
+			StartCoroutine(CloseDoor());
 			StartCoroutine(sinkEntry());
 			
 			//StartCoroutine(colourSpikeDrop());
 			
-			int[] circleSpawns = new int[numCircles];
+			/*int[] circleSpawns = new int[numCircles];
 			for(int i = 0; i < numCircles; i++)
 			{
 				int index = UnityEngine.Random.Range(0, laserCircles.Length);
@@ -86,7 +101,7 @@ public class BattleManager : MonoBehaviour
 				circleSpawns[i] = index;
 			}
 			
-			StartCoroutine(laserCircleSpawn(circleSpawns, 0));
+			StartCoroutine(laserCircleSpawn(circleSpawns, 0));*/
 			
 			//StartCoroutine(laserAttack3());
 			
@@ -107,9 +122,44 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 	
+	private int[] generateRamSequence()
+	{
+		int[] attackRams = new int[numSmashes];
+		for(int i = 0; i < numSmashes; i++)
+		{
+			attackRams[i] = UnityEngine.Random.Range(0, batteringRams.Length);
+			if(i > 0)
+			{
+				while(attackRams[i] == attackRams[i-1])
+				{
+					attackRams[i] = UnityEngine.Random.Range(0, batteringRams.Length);
+				}
+			}
+		}
+		return attackRams;
+	}
+	
+	private int[] generateLaserCircleSequence()
+	{
+		int[] circleSpawns = new int[numSmashes];
+		for(int i = 0; i < numSmashes; i++)
+		{
+			circleSpawns[i] = UnityEngine.Random.Range(0, laserCircles.Length);
+			if(i > 0)
+			{
+				while(circleSpawns[i] == circleSpawns[i-1])
+				{
+					circleSpawns[i] = UnityEngine.Random.Range(0, laserCircles.Length);
+				}
+			}
+		}
+		return circleSpawns;
+	}
+	
 	IEnumerator sinkEntry()
 	{
 		Vector3 startPos = entryTiles.transform.position;
+		StartCoroutine(robotSphereOpen());
 		while(true)
 		{
 			entryTiles.transform.position = Vector3.MoveTowards(entryTiles.transform.position, startPos + sinkDist, sinkSpeed*Time.deltaTime);
@@ -127,13 +177,151 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		entryTiles.SetActive(false);
-		
-		//yield return new WaitForSeconds(1);
-		
-		//StartCoroutine(laserAttack1());
 	}
 	
-	IEnumerator colourSpikeDrop()
+	IEnumerator CloseDoor()
+	{
+		float doorMove = -1.5f;
+		float doorSpeed = 2f;
+		Vector3 doorPos = door.transform.position;
+		Vector3 curDoorPos = doorPos;
+		while(curDoorPos.x > doorPos.x + doorMove)
+		{
+			curDoorPos = door.transform.position;
+			
+			if(curDoorPos.x + doorMove*Time.deltaTime*doorSpeed < doorPos.x + doorMove)
+			{
+				door.transform.position = new Vector3(doorPos.x + doorMove, doorPos.y, doorPos.z);
+			}
+			else
+			{
+				door.transform.position = new Vector3(curDoorPos.x + doorMove*Time.deltaTime*doorSpeed, curDoorPos.y, curDoorPos.z);
+			}
+			yield return null;
+		}
+	}
+	
+	IEnumerator robotSphereOpen()
+	{
+		RobotSphere robotSphereScript = robotSphere.GetComponent<RobotSphere>();
+		robotSphereScript.Activate();
+		yield return new WaitForSeconds(2f);
+		
+		Vector3 startPos = robotSphere.transform.position;
+		while(true)
+		{
+			robotSphere.transform.position = Vector3.MoveTowards(robotSphere.transform.position, startPos + robotFloorMidDist, robotSpeed*Time.deltaTime);
+			if((robotSphere.transform.position - (startPos + robotFloorMidDist)).magnitude <= 0.01)
+			{
+				robotSphere.transform.position = startPos + robotFloorMidDist;
+			}
+			if(robotSphere.transform.position == startPos + robotFloorMidDist)
+			{
+				break;
+			}
+			else
+			{
+				yield return null;
+			}
+		}
+		
+		robotSphereScript.Play(0);
+		
+		yield return new WaitForSeconds(1.5f);
+		
+		startPos = robotSphere.transform.position;
+		while(true)
+		{
+			robotSphere.transform.position = Vector3.MoveTowards(robotSphere.transform.position, startPos + robotMidCeilingDist, robotSpeed*Time.deltaTime);
+			if((robotSphere.transform.position - (startPos + robotMidCeilingDist)).magnitude <= 0.01)
+			{
+				robotSphere.transform.position = startPos + robotMidCeilingDist;
+			}
+			if(robotSphere.transform.position == startPos + robotMidCeilingDist)
+			{
+				break;
+			}
+			else
+			{
+				yield return null;
+			}
+		}
+		robotSphere.SetActive(false);
+		
+		StartCoroutine(ramStab(generateRamSequence(), 0));
+	}
+	
+	IEnumerator robotSphereAnnounce(int attacknum)
+	{
+		robotSphereClosed.SetActive(true);
+		
+		RobotSphere robotSphereScript = robotSphereClosed.GetComponent<RobotSphere>();
+		
+		Vector3 startPos = robotSphereClosed.transform.position;
+		while(true)
+		{
+			robotSphereClosed.transform.position = Vector3.MoveTowards(robotSphereClosed.transform.position, startPos - robotMidCeilingDist, robotSpeed*Time.deltaTime);
+			if((robotSphereClosed.transform.position - (startPos - robotMidCeilingDist)).magnitude <= 0.01)
+			{
+				robotSphereClosed.transform.position = startPos - robotMidCeilingDist;
+			}
+			if(robotSphereClosed.transform.position == startPos - robotMidCeilingDist)
+			{
+				break;
+			}
+			else
+			{
+				yield return null;
+			}
+		}
+		
+		robotSphereScript.Play(attacknum);
+		
+		yield return new WaitForSeconds(1.5f);
+		
+		if(attacknum == 5)
+		{
+			StartCoroutine(raisePlatform());
+		}
+		
+		startPos = robotSphereClosed.transform.position;
+		while(true)
+		{
+			robotSphereClosed.transform.position = Vector3.MoveTowards(robotSphereClosed.transform.position, startPos + robotMidCeilingDist, robotSpeed*Time.deltaTime);
+			if((robotSphereClosed.transform.position - (startPos + robotMidCeilingDist)).magnitude <= 0.01)
+			{
+				robotSphereClosed.transform.position = startPos + robotMidCeilingDist;
+			}
+			if(robotSphereClosed.transform.position == startPos + robotMidCeilingDist)
+			{
+				break;
+			}
+			else
+			{
+				yield return null;
+			}
+		}
+		robotSphereClosed.SetActive(false);
+		
+		if(attacknum == 1)
+		{
+			StartCoroutine(laserAttack1(attacknum));
+		}
+		else if(attacknum == 2)
+		{
+			StartCoroutine(colourSpikeDrop(attacknum));
+		}
+		else if(attacknum == 3)
+		{
+			StartCoroutine(laserAttack3(attacknum));
+		}
+		else if(attacknum == 4)
+		{
+			StartCoroutine(laserCircleSpawn(generateLaserCircleSequence(), 0, attacknum));
+		}
+	}
+	
+	IEnumerator colourSpikeDrop(int attacknum)
 	{
 		string[] arr = {"R", "R", "B", "B", "G", "G"};
 		for(int i = 0; i < arr.Length; i++)
@@ -238,9 +426,11 @@ public class BattleManager : MonoBehaviour
 		}
 		yield return new WaitForSeconds(0.5f);
 		colourLights.SetActive(false);
+		
+		StartCoroutine(robotSphereAnnounce(attacknum+1));
 	}
 	
-	IEnumerator laserCircleSpawn(int[] circleOrder, int orderNum)
+	IEnumerator laserCircleSpawn(int[] circleOrder, int orderNum, int attacknum)
 	{
 		GameObject laserCircle = laserCircles[circleOrder[orderNum]];
 		laserCircle.SetActive(true);
@@ -252,9 +442,9 @@ public class BattleManager : MonoBehaviour
 				Debug.Log(child.eulerAngles.x);
 				yield return null;
 			}*/
-			if(orderNum < circleOrder.Length)
+			if(orderNum < circleOrder.Length-1)
 			{
-				StartCoroutine(laserCircleSpawn(circleOrder, orderNum+1));
+				StartCoroutine(laserCircleSpawn(circleOrder, orderNum+1, attacknum));
 			}
 			
 			yield return new WaitForSeconds(5);
@@ -262,10 +452,13 @@ public class BattleManager : MonoBehaviour
 			break;
 		}
 		
-		yield return null;
+		if(orderNum >= circleOrder.Length-1)
+		{
+			StartCoroutine(robotSphereAnnounce(attacknum+1));
+		}
 	}
 	
-	IEnumerator laserAttack1()
+	IEnumerator laserAttack1(int attacknum)
 	{
 		sweepingLasers1.SetActive(true);
 		Vector3 startPos = sweepingLasers1.transform.position;
@@ -286,9 +479,11 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		sweepingLasers1.SetActive(false);
+		
+		StartCoroutine(robotSphereAnnounce(attacknum+1));
 	}
 	
-	IEnumerator laserAttack2()
+	IEnumerator laserAttack2(int attacknum)
 	{
 		sweepingLasers2.SetActive(true);
 		Vector3 startPos = sweepingLasers2.transform.position;
@@ -309,9 +504,11 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		sweepingLasers2.SetActive(false);
+		
+		StartCoroutine(robotSphereAnnounce(attacknum+1));
 	}
 	
-	IEnumerator laserAttack3()
+	IEnumerator laserAttack3(int attacknum)
 	{
 		sweepingLasers3.SetActive(true);
 		Vector3 startPos = sweepingLasers3.transform.position;
@@ -352,6 +549,8 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		sideLaser.SetActive(true);
+		
+		StartCoroutine(robotSphereAnnounce(attacknum+1));
 	}
 	
 	IEnumerator ramStab(int[] attackOrder, int orderNum)
@@ -396,7 +595,7 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		
-		if(orderNum < attackOrder.Length)
+		if(orderNum < attackOrder.Length-1)
 		{
 			StartCoroutine(ramStab(attackOrder, orderNum+1));
 		}
@@ -412,6 +611,36 @@ public class BattleManager : MonoBehaviour
 				ram.transform.position = startPos + totalDist;
 			}
 			if(ram.transform.position == startPos + totalDist)
+			{
+				break;
+			}
+			else
+			{
+				yield return null;
+			}
+		}
+		
+		if(orderNum >= attackOrder.Length-1)
+		{
+			StartCoroutine(robotSphereAnnounce(1));
+		}
+	}
+	
+	IEnumerator raisePlatform()
+	{
+		portalPlatform.SetActive(true);
+		
+		Vector3 startPos = portalPlatform.transform.position;
+		
+		// raise portal platform
+		while(true)
+		{
+			portalPlatform.transform.position = Vector3.MoveTowards(portalPlatform.transform.position, startPos + portalDist, portalSpeed*Time.deltaTime);
+			if((portalPlatform.transform.position - (startPos + portalDist)).magnitude <= 0.01)
+			{
+				portalPlatform.transform.position = startPos + portalDist;
+			}
+			if(portalPlatform.transform.position == startPos + portalDist)
 			{
 				break;
 			}

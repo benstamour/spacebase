@@ -214,7 +214,14 @@ public class ArenaManager : MonoBehaviour
 				rooms[i].SetActive(false);
 			}
 		}
-		else if(spawnPoint >= 6)
+		else if(spawnPoint == 7)
+		{
+			for(int i = 0; i <= 10; i++)
+			{
+				rooms[i].SetActive(false);
+			}
+		}
+		else if(spawnPoint == 6)
 		{
 			for(int i = 0; i <= 9; i++)
 			{

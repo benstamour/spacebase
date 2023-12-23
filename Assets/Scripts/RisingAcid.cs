@@ -45,10 +45,18 @@ public class RisingAcid : MonoBehaviour
 			float doorSpeed = 2f;
 			Vector3 doorPos = door.transform.position;
 			Vector3 curDoorPos = doorPos;
-			while(curDoorPos.z <= doorPos.z + doorMove)
+			while(curDoorPos.z < doorPos.z + doorMove)
 			{
 				curDoorPos = door.transform.position;
-				door.transform.position = new Vector3(curDoorPos.x, curDoorPos.y, curDoorPos.z + doorMove*Time.deltaTime*doorSpeed);
+				
+				if(curDoorPos.z + doorMove*Time.deltaTime*doorSpeed > doorPos.z + doorMove)
+				{
+					door.transform.position = new Vector3(doorPos.x, doorPos.y, doorPos.z + doorMove);
+				}
+				else
+				{
+					door.transform.position = new Vector3(curDoorPos.x, curDoorPos.y, curDoorPos.z + doorMove*Time.deltaTime*doorSpeed);
+				}
 				yield return null;
 			}
 		}
