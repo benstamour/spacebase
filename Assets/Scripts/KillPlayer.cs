@@ -24,7 +24,8 @@ public class KillPlayer : MonoBehaviour
     {
 		if(col.gameObject.tag == "DeathZone")
 		{
-			//Debug.Log(col.gameObject.name);
+			Debug.Log(col.gameObject.name);
+			Debug.Log(col.gameObject.transform.parent.gameObject.name);
 			Respawn();
 		}
     }

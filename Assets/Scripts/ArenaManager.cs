@@ -253,7 +253,7 @@ public class ArenaManager : MonoBehaviour
 			{
 				rooms[i].SetActive(false);
 			}
-			for(int i = 10; i <= rooms.Length; i++)
+			for(int i = 10; i < rooms.Length; i++)
 			{
 				rooms[i].SetActive(false);
 			}

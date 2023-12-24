@@ -72,13 +72,13 @@ public class BattleManager : MonoBehaviour
 	private int attackNum = -1;
 	private bool attacking = false;
 	
-	private GameObject objectToMove;
+	/*private GameObject objectToMove;
 	private Vector3 objStartPos;
 	private Vector3 objDistance;
 	private float objSpeed;
 	private bool isMoving = false;
 	private bool toBeReversed = false;
-	private int orderNum;
+	private int orderNum;*/
 	
 	private int[] attackRams;
 	private int[] circleSpawns;
@@ -241,14 +241,15 @@ public class BattleManager : MonoBehaviour
 		circleSpawns = new int[numCircles];
 		for(int i = 0; i < numCircles; i++)
 		{
-			circleSpawns[i] = UnityEngine.Random.Range(0, laserCircles.Length);
+			int index = UnityEngine.Random.Range(0, laserCircles.Length);
 			if(i > 0)
 			{
-				while(circleSpawns[i] == circleSpawns[i-1])
+				while(System.Array.IndexOf(circleSpawns, index) > -1)
 				{
-					circleSpawns[i] = UnityEngine.Random.Range(0, laserCircles.Length);
+					index = UnityEngine.Random.Range(0, laserCircles.Length);
 				}
 			}
+			circleSpawns[i] = index;
 		}
 		return circleSpawns;
 	}
@@ -257,7 +258,7 @@ public class BattleManager : MonoBehaviour
 	{
 		Debug.Log("I");
 		string[] arr = {"R", "R", "B", "B", "G", "G"};
-		for(int i = 0; i < arr.Length; i++)
+		for(int i = 0; i < arr.Length - 1; i++)
 		{
 			int num = UnityEngine.Random.Range(i,arr.Length);
 			if(i > 0)
