@@ -258,9 +258,9 @@ public class ArenaManager : MonoBehaviour
 				rooms[i].SetActive(false);
 			}
 		}
-		else
+		else // spawnPoint == 3
 		{
-			for(int i = 9; i < rooms.Length; i++)
+			for(int i = 10; i < rooms.Length; i++)
 			{
 				rooms[i].SetActive(false);
 			}

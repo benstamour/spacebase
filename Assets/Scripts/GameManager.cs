@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 	public AudioClip leverClip;
 	public AudioClip endZoneClip;
 	
+	public AudioClip[] robotVoiceClips;
+	
 	public AudioSource audioSource1;
 	public AudioSource audioSource2;
 	[SerializeField] private bool volume = true; // is music/sound on or off?
@@ -50,25 +52,6 @@ public class GameManager : MonoBehaviour
 		if(SceneManager.GetActiveScene().name == "BootstrapScene")
 		{
 			this.LoadStartScreen();
-		}
-		
-		// move the below code to the ARENA MANAGER after making it
-		this.introcode = UnityEngine.Random.Range(1000,10000);
-		
-		string[] arr = {"C", "C", "M", "M", "Y", "Y"};
-		for(int i = arr.Length - 1; i > 0; i--)
-		{
-			int num = UnityEngine.Random.Range(0,i);
-			string temp = arr[i];
-			arr[i] = arr[num];
-			arr[num] = temp;
-		}
-		this.colourcode = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
-		
-		int numHoloTiles = 6;
-		for(int i = 0; i < numHoloTiles; i++)
-		{
-			this.holocode = this.holocode + UnityEngine.Random.Range(0,2);
 		}
 	}
 	
@@ -181,6 +164,25 @@ public class GameManager : MonoBehaviour
 	{
 		this.spawnPoint = -1;
 		SceneManager.LoadScene("Arena");
+		
+		// move the below code to the ARENA MANAGER after making it
+		this.introcode = UnityEngine.Random.Range(1000,10000);
+		
+		string[] arr = {"C", "C", "M", "M", "Y", "Y"};
+		for(int i = arr.Length - 1; i > 0; i--)
+		{
+			int num = UnityEngine.Random.Range(0,i);
+			string temp = arr[i];
+			arr[i] = arr[num];
+			arr[num] = temp;
+		}
+		this.colourcode = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
+		
+		int numHoloTiles = 6;
+		for(int i = 0; i < numHoloTiles; i++)
+		{
+			this.holocode = this.holocode + UnityEngine.Random.Range(0,2);
+		}
 		
 		// play arena soundtrack
 		StartCoroutine(CheckArenaLoaded());
@@ -351,14 +353,14 @@ public class GameManager : MonoBehaviour
 		{
 			AudioSource audioSource = this.audioSource1;
 			audioSource.Stop();
-			audioSource.clip = circuitSoundtrack;
+			audioSource.clip = neonSoundtrack;
 			audioSource.loop = true;
 			audioSource.Play();
 			this.curArenaMusic = 1;
 			
 			if(this.audioSource1.volume > 0)
 			{
-				this.audioSource1.volume = 1;
+				this.audioSource1.volume = 0.75f;
 			}
 		}
 	}
@@ -426,7 +428,7 @@ public class GameManager : MonoBehaviour
 			
 			if(this.audioSource1.volume > 0)
 			{
-				this.audioSource1.volume = 0.3f;
+				this.audioSource1.volume = 0.35f;
 			}
 		}
 	}
@@ -446,5 +448,15 @@ public class GameManager : MonoBehaviour
 	public string getHoloCode()
 	{
 		return this.holocode;
+	}
+	
+	public void robotVoicePlay(int i)
+	{
+		Debug.Log("O");
+		AudioSource audioSource = this.audioSource2;
+		audioSource.Stop();
+		audioSource.clip = robotVoiceClips[i];
+		audioSource.loop = false;
+		audioSource.Play();
 	}
 }

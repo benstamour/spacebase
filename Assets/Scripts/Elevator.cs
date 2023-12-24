@@ -14,7 +14,9 @@ public class Elevator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject door = GameObject.Find("Seventh Door");
+		Animator anim = door.GetComponent<Animator>();
+		anim.SetBool("character_nearby", true);
     }
 
     // Update is called once per frame

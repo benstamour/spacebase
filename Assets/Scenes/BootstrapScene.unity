@@ -172,6 +172,13 @@ MonoBehaviour:
   orbClip: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
   leverClip: {fileID: 8300000, guid: 6e134bd7c8288604a9558744e15fcf4b, type: 3}
   endZoneClip: {fileID: 8300000, guid: 2707a27c68052a2438ccd4bab6a19c68, type: 3}
+  robotVoiceClips:
+  - {fileID: 8300000, guid: a839e3faf606249238d23b7268ded605, type: 3}
+  - {fileID: 8300000, guid: ee4ade18c432c454689d4614d71b485f, type: 3}
+  - {fileID: 8300000, guid: 139e76ab399c34e26b319c09b4825aef, type: 3}
+  - {fileID: 8300000, guid: 443bcbc1f8ef942b68d29e8142fcc923, type: 3}
+  - {fileID: 8300000, guid: ef5b81f56a2dc48638de75b1ca40797c, type: 3}
+  - {fileID: 8300000, guid: 7676d8ee3128347ce98d2d3ebb6cb7e5, type: 3}
   audioSource1: {fileID: 102889867}
   audioSource2: {fileID: 102889866}
   volume: 1

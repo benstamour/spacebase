@@ -58,22 +58,119 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] float robotSpeed;
 	[SerializeField] Vector3 robotFloorMidDist = new Vector3(0, 1f, 0);
 	[SerializeField] Vector3 robotMidCeilingDist = new Vector3(0, 8f, 0);
+	[SerializeField] Vector3 robotDisappearDist = new Vector3(0, 5.25f, 0);
+	[SerializeField] Vector3 robotClosedDist = new Vector3(0, 4.75f, 0);
 	
 	// FINAL PLATFORM
 	[SerializeField] GameObject portalPlatform;
 	[SerializeField] float portalSpeed;
 	[SerializeField] Vector3 portalDist = new Vector3(0, 4, 0);
 	
+	private GameManager gameManagerScript;
+	private WaitForSeconds shortWait = new WaitForSeconds(0.5f);
+	private WaitForSeconds announceWait = new WaitForSeconds(1.5f);
+	private int attackNum = -1;
+	private bool attacking = false;
+	
+	private GameObject objectToMove;
+	private Vector3 objStartPos;
+	private Vector3 objDistance;
+	private float objSpeed;
+	private bool isMoving = false;
+	private bool toBeReversed = false;
+	private int orderNum;
+	
+	private int[] attackRams;
+	private int[] circleSpawns;
+	private string dropSequence;
+	
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+		
+		generateRamSequence();
+		generateLaserCircleSequence();
+		generateSpikeDropSequence();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(!attacking && attackNum != -1)
+		{
+			StopAllCoroutines();
+			Debug.Log("W " + attackNum);
+			attacking = true;
+			if(attackNum > 0)
+			{
+				this.gameManagerScript.robotVoicePlay(attackNum);
+			}
+			if(attackNum == 0)
+			{
+				StartCoroutine(ramStab(0));
+			}
+			else if(attackNum == 1)
+			{
+				Debug.Log("P");
+				StartCoroutine(laserAttack1());
+			}
+			else if(attackNum == 2)
+			{
+				Debug.Log("Y");
+				StartCoroutine(flashLights());
+				//StartCoroutine(colourSpikeDrop());
+			}
+			else if(attackNum == 3)
+			{
+				StartCoroutine(laserAttack3());
+			}
+			else if(attackNum == 4)
+			{
+				StartCoroutine(laserCircleSpawn(0));
+			}
+			else if(attackNum == 5)
+			{
+				StartCoroutine(raisePlatform());
+			}
+		}
+		
+		/*if(isMoving)
+		{
+			objectToMove.transform.position = Vector3.MoveTowards(objectToMove.transform.position, objStartPos + objDistance, objSpeed*Time.deltaTime);
+			
+			if((objectToMove.transform.position - (objStartPos + objDistance)).magnitude <= 0.01)
+			{
+				objectToMove.transform.position = objStartPos + objDistance;
+			}
+			if(objectToMove.transform.position == objStartPos + objDistance)
+			{
+				if(toBeReversed)
+				{
+					objDistance *= -1;
+					objStartPos = objectToMove.transform.position;
+					toBeReversed = false;
+				}
+				else
+				{
+					if(attackNum == 0 && orderNum < numSmashes-1)
+					{
+						objectToMove = attackRams[orderNum+1];
+						objStartPos = objectToMove.transform.position;
+						isMoving = true;
+						toBeReversed = true;
+					}
+					else if(attackNum == 2)
+					{
+						
+					}
+					else
+					{
+						isMoving = false;
+					}
+				}
+			}
+		}*/
     }
 	
 	private void OnTriggerEnter(Collider other)
@@ -124,7 +221,7 @@ public class BattleManager : MonoBehaviour
 	
 	private int[] generateRamSequence()
 	{
-		int[] attackRams = new int[numSmashes];
+		attackRams = new int[numSmashes];
 		for(int i = 0; i < numSmashes; i++)
 		{
 			attackRams[i] = UnityEngine.Random.Range(0, batteringRams.Length);
@@ -141,8 +238,8 @@ public class BattleManager : MonoBehaviour
 	
 	private int[] generateLaserCircleSequence()
 	{
-		int[] circleSpawns = new int[numCircles];
-		for(int i = 0; i < numSmashes; i++)
+		circleSpawns = new int[numCircles];
+		for(int i = 0; i < numCircles; i++)
 		{
 			circleSpawns[i] = UnityEngine.Random.Range(0, laserCircles.Length);
 			if(i > 0)
@@ -154,6 +251,30 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		return circleSpawns;
+	}
+	
+	private string generateSpikeDropSequence()
+	{
+		Debug.Log("I");
+		string[] arr = {"R", "R", "B", "B", "G", "G"};
+		for(int i = 0; i < arr.Length; i++)
+		{
+			int num = UnityEngine.Random.Range(i,arr.Length);
+			if(i > 0)
+			{
+				while(arr[num] == arr[i-1])
+				{
+					Debug.Log("H");
+					num = UnityEngine.Random.Range(i,arr.Length);
+				}
+			}
+			string temp = arr[i];
+			arr[i] = arr[num];
+			arr[num] = temp;
+		}
+		dropSequence = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
+		Debug.Log("HH");
+		return dropSequence;
 	}
 	
 	IEnumerator sinkEntry()
@@ -225,9 +346,10 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		
-		robotSphereScript.Play(0);
+		//robotSphereScript.Play(0);
+		this.gameManagerScript.robotVoicePlay(0);
 		
-		yield return new WaitForSeconds(1.5f);
+		yield return announceWait;
 		
 		startPos = robotSphere.transform.position;
 		while(true)
@@ -248,101 +370,130 @@ public class BattleManager : MonoBehaviour
 		}
 		robotSphere.SetActive(false);
 		
+		robotSphereClosed.SetActive(true);
+		
+		startPos = robotSphereClosed.transform.position;
+		while(true)
+		{
+			robotSphereClosed.transform.position = Vector3.MoveTowards(robotSphereClosed.transform.position, startPos - robotClosedDist, robotSpeed*Time.deltaTime);
+			if((robotSphereClosed.transform.position - (startPos - robotClosedDist)).magnitude <= 0.01)
+			{
+				robotSphereClosed.transform.position = startPos - robotClosedDist;
+				break;
+			}
+			if(robotSphereClosed.transform.position.y <= startPos.y - robotClosedDist.y)
+			{
+				robotSphereClosed.transform.position = startPos - robotClosedDist;
+				break;
+			}
+			else
+			{
+				yield return null;
+			}
+		}
+		
 		GameManager gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 		gameManagerScript.triggerBattleMusic();
 		
-		StartCoroutine(ramStab(generateRamSequence(), 0));
+		attackNum = 0;
+		
+		//StartCoroutine(ramStab(generateRamSequence(), 0));
 	}
 	
 	IEnumerator robotSphereAnnounce(int attacknum)
 	{
-		robotSphereClosed.SetActive(true);
+		Debug.Log("A");
+		//RobotSphere robotSphereScript = robotSphereClosed.GetComponent<RobotSphere>();
+		
+		/*robotSphereClosed.SetActive(true);
 		
 		RobotSphere robotSphereScript = robotSphereClosed.GetComponent<RobotSphere>();
 		
 		Vector3 startPos = robotSphereClosed.transform.position;
+		Debug.Log(startPos);
 		while(true)
 		{
 			robotSphereClosed.transform.position = Vector3.MoveTowards(robotSphereClosed.transform.position, startPos - robotMidCeilingDist, robotSpeed*Time.deltaTime);
 			if((robotSphereClosed.transform.position - (startPos - robotMidCeilingDist)).magnitude <= 0.01)
 			{
 				robotSphereClosed.transform.position = startPos - robotMidCeilingDist;
+				break;
 			}
-			if(robotSphereClosed.transform.position == startPos - robotMidCeilingDist)
+			if(robotSphereClosed.transform.position.y <= startPos.y - robotMidCeilingDist.y)
 			{
+				robotSphereClosed.transform.position = startPos - robotMidCeilingDist;
 				break;
 			}
 			else
 			{
 				yield return null;
 			}
-		}
+		}*/
 		
-		robotSphereScript.Play(attacknum);
-		
-		yield return new WaitForSeconds(1.5f);
-		
+		yield return announceWait;
+		Debug.Log("B");
+		//robotSphereScript.Play(attacknum);
+		this.gameManagerScript.robotVoicePlay(attacknum);
+		Debug.Log("C");
+		yield return announceWait;
+		Debug.Log("D");
 		if(attacknum == 5)
 		{
 			StartCoroutine(raisePlatform());
 		}
 		
+		/*Debug.Log("K");
 		startPos = robotSphereClosed.transform.position;
+		int i = 0;
 		while(true)
 		{
+			i += 1;
 			robotSphereClosed.transform.position = Vector3.MoveTowards(robotSphereClosed.transform.position, startPos + robotMidCeilingDist, robotSpeed*Time.deltaTime);
-			if((robotSphereClosed.transform.position - (startPos + robotMidCeilingDist)).magnitude <= 0.01)
+			if((robotSphereClosed.transform.position - (startPos + robotMidCeilingDist)).magnitude <= (robotMidCeilingDist - robotDisappearDist).magnitude) // 0.01)
 			{
 				robotSphereClosed.transform.position = startPos + robotMidCeilingDist;
+				break;
 			}
-			if(robotSphereClosed.transform.position == startPos + robotMidCeilingDist)
+			if(robotSphereClosed.transform.position.y >= startPos.y + robotMidCeilingDist.y)
 			{
+				robotSphereClosed.transform.position = startPos + robotMidCeilingDist;
+				Debug.Log("M " + i);
 				break;
 			}
 			else
 			{
+				Debug.Log("L " + i);
 				yield return null;
 			}
 		}
-		robotSphereClosed.SetActive(false);
+		Debug.Log("J");
+		robotSphereClosed.SetActive(false);*/
 		
+		Debug.Log("X");
 		if(attacknum == 1)
 		{
-			StartCoroutine(laserAttack1(attacknum));
+			StartCoroutine(laserAttack1());
 		}
 		else if(attacknum == 2)
 		{
-			StartCoroutine(colourSpikeDrop(attacknum));
+			Debug.Log("Y");
+			StartCoroutine(colourSpikeDrop(0));
 		}
 		else if(attacknum == 3)
 		{
-			StartCoroutine(laserAttack3(attacknum));
+			StartCoroutine(laserAttack3());
 		}
 		else if(attacknum == 4)
 		{
-			StartCoroutine(laserCircleSpawn(generateLaserCircleSequence(), 0, attacknum));
+			StartCoroutine(laserCircleSpawn(0));
 		}
+		Debug.Log("Z");
 	}
 	
-	IEnumerator colourSpikeDrop(int attacknum)
+	IEnumerator flashLights()
 	{
-		string[] arr = {"R", "R", "B", "B", "G", "G"};
-		for(int i = 0; i < arr.Length; i++)
-		{
-			int num = UnityEngine.Random.Range(i,arr.Length);
-			if(i > 0)
-			{
-				while(arr[num] == arr[i-1])
-				{
-					num = UnityEngine.Random.Range(i,arr.Length);
-				}
-			}
-			string temp = arr[i];
-			arr[i] = arr[num];
-			arr[num] = temp;
-		}
-		string dropSequence = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
-		Debug.Log(dropSequence);
+		Debug.Log("N");
+		yield return announceWait;
 		
 		for(int i = 0; i < dropSequence.Length; i++)
 		{
@@ -363,8 +514,9 @@ public class BattleManager : MonoBehaviour
 					light.color = Color.green;
 				}
 			}
-			yield return new WaitForSeconds(0.5f);
+			yield return shortWait;
 		}
+		Debug.Log("E");
 		foreach(Transform child in colourLights.transform)
 		{
 			Light light = child.gameObject.GetComponent<Light>();
@@ -374,32 +526,139 @@ public class BattleManager : MonoBehaviour
 		
 		yield return new WaitForSeconds(1);
 		
-		for(int i = 0; i < dropSequence.Length; i++)
+		StartCoroutine(colourSpikeDrop(0));
+	}
+	
+	IEnumerator colourSpikeDrop(int orderNum)
+	{
+		Debug.Log("D");
+		//string dropSequence = generateSpikeDropSequence();
+		
+		/*for(int i = 0; i < dropSequence.Length; i++)
 		{
 			char colour = dropSequence[i];
-			GameObject spikes;
-			if(colour == 'R')
+			foreach(Transform child in colourLights.transform)
 			{
-				spikes = redSpikes;
+				Light light = child.gameObject.GetComponent<Light>();
+				if(colour == 'R')
+				{
+					light.color = Color.red;
+				}
+				else if(colour == 'B')
+				{
+					light.color = Color.blue;
+				}
+				else
+				{
+					light.color = Color.green;
+				}
 			}
-			else if(colour == 'B')
+			yield return shortWait;
+		}
+		Debug.Log("E");
+		foreach(Transform child in colourLights.transform)
+		{
+			Light light = child.gameObject.GetComponent<Light>();
+			light.color = Color.white;
+			light.intensity = 0.5f;
+		}
+		
+		yield return new WaitForSeconds(1);*/
+		
+		char colour = dropSequence[orderNum];
+		GameObject spikes1;
+		GameObject spikes2;
+		if(colour == 'R')
+		{
+			spikes1 = greenSpikes;
+			spikes2 = blueSpikes;
+		}
+		else if(colour == 'B')
+		{
+			spikes1 = redSpikes;
+			spikes2 = greenSpikes;
+		}
+		else
+		{
+			spikes1 = redSpikes;
+			spikes2 = blueSpikes;
+		}
+		
+		Vector3 startPos = spikes1.transform.position;
+		while(true)
+		{
+			Debug.Log("G");
+			spikes1.transform.position = Vector3.MoveTowards(spikes1.transform.position, startPos + spikeDropDist, spikeDropSpeed*Time.deltaTime);
+			spikes2.transform.position = Vector3.MoveTowards(spikes2.transform.position, startPos + spikeDropDist, spikeDropSpeed*Time.deltaTime);
+			if((spikes1.transform.position - (startPos + spikeDropDist)).magnitude <= 0.01)
 			{
-				spikes = blueSpikes;
+				spikes1.transform.position = startPos + spikeDropDist;
+				spikes2.transform.position = startPos + spikeDropDist;
+			}
+			if(spikes1.transform.position == startPos + spikeDropDist)
+			{
+				break;
 			}
 			else
 			{
-				spikes = greenSpikes;
+				yield return null;
+			}
+		}
+		
+		startPos = spikes1.transform.position;
+		while(true)
+		{
+			spikes1.transform.position = Vector3.MoveTowards(spikes1.transform.position, startPos - spikeDropDist, spikeDropSpeed*Time.deltaTime);
+			spikes2.transform.position = Vector3.MoveTowards(spikes2.transform.position, startPos - spikeDropDist, spikeDropSpeed*Time.deltaTime);
+			if((spikes1.transform.position - (startPos - spikeDropDist)).magnitude <= 0.01)
+			{
+				spikes1.transform.position = startPos - spikeDropDist;
+				spikes2.transform.position = startPos - spikeDropDist;
+			}
+			if(spikes1.transform.position == startPos - spikeDropDist)
+			{
+				break;
+			}
+			else
+			{
+				yield return null;
+			}
+		}
+		
+		/*for(int i = 0; i < dropSequence.Length; i++)
+		{
+			Debug.Log("F");
+			char colour = dropSequence[i];
+			GameObject spikes1;
+			GameObject spikes2;
+			if(colour == 'R')
+			{
+				spikes1 = greenSpikes;
+				spikes2 = blueSpikes;
+			}
+			else if(colour == 'B')
+			{
+				spikes1 = redSpikes;
+				spikes2 = greenSpikes;
+			}
+			else
+			{
+				spikes1 = redSpikes;
+				spikes2 = blueSpikes;
 			}
 			
-			Vector3 startPos = spikes.transform.position;
+			Vector3 startPos = spikes1.transform.position;
 			while(true)
 			{
-				spikes.transform.position = Vector3.MoveTowards(spikes.transform.position, startPos + spikeDropDist, spikeDropSpeed*Time.deltaTime);
-				if((spikes.transform.position - (startPos + spikeDropDist)).magnitude <= 0.01)
+				Debug.Log("G");
+				spikes1.transform.position = Vector3.MoveTowards(spikes1.transform.position, startPos + spikeDropDist, spikeDropSpeed*Time.deltaTime);
+				spikes2.transform.position = Vector3.MoveTowards(spikes2.transform.position, startPos + spikeDropDist, spikeDropSpeed*Time.deltaTime);
+				if((spikes1.transform.position - (startPos + spikeDropDist)).magnitude <= 0.01)
 				{
-					spikes.transform.position = startPos + spikeDropDist;
+					spikes1.transform.position = startPos + spikeDropDist;
+					spikes2.transform.position = startPos + spikeDropDist;
 				}
-				if(spikes.transform.position == startPos + spikeDropDist)
+				if(spikes1.transform.position == startPos + spikeDropDist)
 				{
 					break;
 				}
@@ -409,15 +668,17 @@ public class BattleManager : MonoBehaviour
 				}
 			}
 			
-			startPos = spikes.transform.position;
+			startPos = spikes1.transform.position;
 			while(true)
 			{
-				spikes.transform.position = Vector3.MoveTowards(spikes.transform.position, startPos - spikeDropDist, spikeDropSpeed*Time.deltaTime);
-				if((spikes.transform.position - (startPos - spikeDropDist)).magnitude <= 0.01)
+				spikes1.transform.position = Vector3.MoveTowards(spikes1.transform.position, startPos - spikeDropDist, spikeDropSpeed*Time.deltaTime);
+				spikes2.transform.position = Vector3.MoveTowards(spikes2.transform.position, startPos - spikeDropDist, spikeDropSpeed*Time.deltaTime);
+				if((spikes1.transform.position - (startPos - spikeDropDist)).magnitude <= 0.01)
 				{
-					spikes.transform.position = startPos - spikeDropDist;
+					spikes1.transform.position = startPos - spikeDropDist;
+					spikes2.transform.position = startPos - spikeDropDist;
 				}
-				if(spikes.transform.position == startPos - spikeDropDist)
+				if(spikes1.transform.position == startPos - spikeDropDist)
 				{
 					break;
 				}
@@ -427,15 +688,34 @@ public class BattleManager : MonoBehaviour
 				}
 			}
 		}
-		yield return new WaitForSeconds(0.5f);
-		colourLights.SetActive(false);
+		yield return shortWait;
+		colourLights.SetActive(false);*/
 		
-		StartCoroutine(robotSphereAnnounce(attacknum+1));
+		if(orderNum >= dropSequence.Length-1)
+		{
+			colourLights.SetActive(false);
+			attackNum++;
+			attacking = false;
+			yield return announceWait;
+			//StartCoroutine(robotSphereAnnounce(attacknum+1));
+		}
+		else
+		{
+			StartCoroutine(colourSpikeDrop(orderNum+1));
+		}
+		
+		//attackNum++;
+		//attacking = false;
+		//StartCoroutine(robotSphereAnnounce(attacknum+1));
 	}
 	
-	IEnumerator laserCircleSpawn(int[] circleOrder, int orderNum, int attacknum)
+	IEnumerator laserCircleSpawn(int orderNum)
 	{
-		GameObject laserCircle = laserCircles[circleOrder[orderNum]];
+		if(orderNum == 0)
+		{
+			yield return announceWait;
+		}
+		GameObject laserCircle = laserCircles[circleSpawns[orderNum]];
 		laserCircle.SetActive(true);
 		foreach(Transform child in laserCircle.transform)
 		{
@@ -445,9 +725,9 @@ public class BattleManager : MonoBehaviour
 				Debug.Log(child.eulerAngles.x);
 				yield return null;
 			}*/
-			if(orderNum < circleOrder.Length-1)
+			if(orderNum < circleSpawns.Length-1)
 			{
-				StartCoroutine(laserCircleSpawn(circleOrder, orderNum+1, attacknum));
+				StartCoroutine(laserCircleSpawn(orderNum+1));
 			}
 			
 			yield return new WaitForSeconds(5);
@@ -455,14 +735,19 @@ public class BattleManager : MonoBehaviour
 			break;
 		}
 		
-		if(orderNum >= circleOrder.Length-1)
+		if(orderNum >= circleSpawns.Length-1)
 		{
-			StartCoroutine(robotSphereAnnounce(attacknum+1));
+			attackNum++;
+			attacking = false;
+			yield return announceWait;
+			//StartCoroutine(robotSphereAnnounce(attacknum+1));
 		}
 	}
 	
-	IEnumerator laserAttack1(int attacknum)
+	IEnumerator laserAttack1()
 	{
+		yield return announceWait;
+		Debug.Log("V");
 		sweepingLasers1.SetActive(true);
 		Vector3 startPos = sweepingLasers1.transform.position;
 		while(true)
@@ -474,20 +759,28 @@ public class BattleManager : MonoBehaviour
 			}
 			if(sweepingLasers1.transform.position == startPos + lasers1Dist)
 			{
+				Debug.Log("T");
 				break;
 			}
 			else
 			{
+				Debug.Log("U");
 				yield return null;
 			}
 		}
+		Debug.Log("S");
 		sweepingLasers1.SetActive(false);
-		
-		StartCoroutine(robotSphereAnnounce(attacknum+1));
+		Debug.Log("R");
+		attackNum++;
+		attacking = false;
+		yield return announceWait;
+		Debug.Log("Q");
+		//StartCoroutine(robotSphereAnnounce(attacknum+1));
 	}
 	
-	IEnumerator laserAttack2(int attacknum)
+	IEnumerator laserAttack2()
 	{
+		yield return announceWait;
 		sweepingLasers2.SetActive(true);
 		Vector3 startPos = sweepingLasers2.transform.position;
 		while(true)
@@ -508,11 +801,15 @@ public class BattleManager : MonoBehaviour
 		}
 		sweepingLasers2.SetActive(false);
 		
-		StartCoroutine(robotSphereAnnounce(attacknum+1));
+		attackNum++;
+		attacking = false;
+		yield return announceWait;
+		//StartCoroutine(robotSphereAnnounce(attacknum+1));
 	}
 	
-	IEnumerator laserAttack3(int attacknum)
+	IEnumerator laserAttack3()
 	{
+		yield return announceWait;
 		sweepingLasers3.SetActive(true);
 		Vector3 startPos = sweepingLasers3.transform.position;
 		while(true)
@@ -553,12 +850,15 @@ public class BattleManager : MonoBehaviour
 		}
 		sideLaser.SetActive(true);
 		
-		StartCoroutine(robotSphereAnnounce(attacknum+1));
+		//StartCoroutine(robotSphereAnnounce(attacknum+1));
+		attackNum++;
+		attacking = false;
+		yield return announceWait;
 	}
 	
-	IEnumerator ramStab(int[] attackOrder, int orderNum)
+	IEnumerator ramStab(int orderNum)
 	{
-		GameObject ram = batteringRams[attackOrder[orderNum]];
+		GameObject ram = batteringRams[attackRams[orderNum]];
 		Vector3 startPos = ram.transform.position;
 		
 		// battering ram emerges slowly
@@ -598,9 +898,9 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		
-		if(orderNum < attackOrder.Length-1)
+		if(orderNum < attackRams.Length-1)
 		{
-			StartCoroutine(ramStab(attackOrder, orderNum+1));
+			StartCoroutine(ramStab(orderNum+1));
 		}
 		
 		startPos = ram.transform.position;
@@ -623,14 +923,18 @@ public class BattleManager : MonoBehaviour
 			}
 		}
 		
-		if(orderNum >= attackOrder.Length-1)
+		if(orderNum >= attackRams.Length-1)
 		{
-			StartCoroutine(robotSphereAnnounce(1));
+			//StartCoroutine(robotSphereAnnounce(1));
+			attackNum++;
+			attacking = false;
+			yield return announceWait;
 		}
 	}
 	
 	IEnumerator raisePlatform()
 	{
+		yield return announceWait;
 		portalPlatform.SetActive(true);
 		
 		Vector3 startPos = portalPlatform.transform.position;
@@ -652,5 +956,8 @@ public class BattleManager : MonoBehaviour
 				yield return null;
 			}
 		}
+		
+		attackNum = -1;
+		attacking = false;
 	}
 }

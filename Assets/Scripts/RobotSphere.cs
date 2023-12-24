@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RobotSphere : MonoBehaviour
 {
-	[SerializeField] private AudioClip[] clips;
+	//[SerializeField] private AudioClip[] clips;
 	[SerializeField] bool isAnimated;
 	
 	// Start is called before the first frame update
@@ -29,11 +29,11 @@ public class RobotSphere : MonoBehaviour
 		anim.speed = 1.5f;
 	}
 	
-	public void Play(int i)
+	/*public void Play(int i)
 	{
 		AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-		audioSource.clip = clips[i];
 		audioSource.Stop();
+		audioSource.clip = clips[i];
 		audioSource.Play();
-	}
+	}*/
 }

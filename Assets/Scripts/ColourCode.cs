@@ -58,12 +58,12 @@ public class ColourCode : MonoBehaviour
 		}
 		
 		this.input = this.input + colour;
-		Debug.Log(this.input);
+		//Debug.Log(this.input);
 		if(this.input.Length == 5)
 		{
 			if(this.input == this.code)
 			{
-				Debug.Log("Correct");
+				//Debug.Log("Correct");
 				this.screen.GetComponent<MeshRenderer>().material = correctMaterial;
 				this.correct = true;
 				
@@ -80,7 +80,7 @@ public class ColourCode : MonoBehaviour
 			else
 			{
 				this.screen.GetComponent<MeshRenderer>().material = incorrectMaterial;
-				Debug.Log("Incorrect");
+				//Debug.Log("Incorrect");
 				StartCoroutine(revertScreen());
 				
 			}
