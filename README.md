@@ -7,7 +7,7 @@ To improve upon my previous games, I implemented passcodes in some areas that mu
 
 I designed and created the arena using assets from the Unity Asset Store, and I also worked with scripting, GUI, animations, textures, audio, lighting, and editing 3D models (sculpting, posing, modifying vertices, and arranging scenes). To play the game, you can download the .zip file for the build using **[this link](https://drive.google.com/uc?export=download&id=1gSNAK2ZZJHmp5pzwot2zI2-SD2GoAFLK)** and run `The Space Base.exe`. You can also check out **[this page](https://bensta.epizy.com/spacebase/)** to see some images of the game along with a list of assets used in the final build and links to the sources.
 
-Below are some preview images of the game:
+Below are some sample gameplay screenshots:
 
 ![Gameplay screenshot](https://github.com/benstamour/spacebase/assets/115811410/d075053d-7088-4726-bd4b-e4eff4b7cf7b)
 ![Gameplay screenshot](https://github.com/benstamour/spacebase/assets/115811410/03c84fac-d2bf-471a-b47d-a077ab4e9917)
