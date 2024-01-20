@@ -100,7 +100,6 @@ public class BattleManager : MonoBehaviour
         if(!attacking && attackNum != -1)
 		{
 			StopAllCoroutines();
-			Debug.Log("W " + attackNum);
 			attacking = true;
 			if(attackNum > 0)
 			{
@@ -112,12 +111,10 @@ public class BattleManager : MonoBehaviour
 			}
 			else if(attackNum == 1)
 			{
-				Debug.Log("P");
 				StartCoroutine(laserAttack1());
 			}
 			else if(attackNum == 2)
 			{
-				Debug.Log("Y");
 				StartCoroutine(flashLights());
 				//StartCoroutine(colourSpikeDrop());
 			}
@@ -256,7 +253,6 @@ public class BattleManager : MonoBehaviour
 	
 	private string generateSpikeDropSequence()
 	{
-		Debug.Log("I");
 		string[] arr = {"R", "R", "B", "B", "G", "G"};
 		for(int i = 0; i < arr.Length - 1; i++)
 		{
@@ -265,7 +261,6 @@ public class BattleManager : MonoBehaviour
 			{
 				while(arr[num] == arr[i-1])
 				{
-					Debug.Log("H");
 					num = UnityEngine.Random.Range(i,arr.Length);
 				}
 			}
@@ -274,7 +269,6 @@ public class BattleManager : MonoBehaviour
 			arr[num] = temp;
 		}
 		dropSequence = arr[0] + arr[1] + arr[2] + arr[3] + arr[4];
-		Debug.Log("HH");
 		return dropSequence;
 	}
 	
@@ -403,7 +397,6 @@ public class BattleManager : MonoBehaviour
 	
 	IEnumerator robotSphereAnnounce(int attacknum)
 	{
-		Debug.Log("A");
 		//RobotSphere robotSphereScript = robotSphereClosed.GetComponent<RobotSphere>();
 		
 		/*robotSphereClosed.SetActive(true);
@@ -432,12 +425,9 @@ public class BattleManager : MonoBehaviour
 		}*/
 		
 		yield return announceWait;
-		Debug.Log("B");
 		//robotSphereScript.Play(attacknum);
 		this.gameManagerScript.robotVoicePlay(attacknum);
-		Debug.Log("C");
 		yield return announceWait;
-		Debug.Log("D");
 		if(attacknum == 5)
 		{
 			StartCoroutine(raisePlatform());
@@ -470,14 +460,12 @@ public class BattleManager : MonoBehaviour
 		Debug.Log("J");
 		robotSphereClosed.SetActive(false);*/
 		
-		Debug.Log("X");
 		if(attacknum == 1)
 		{
 			StartCoroutine(laserAttack1());
 		}
 		else if(attacknum == 2)
 		{
-			Debug.Log("Y");
 			StartCoroutine(colourSpikeDrop(0));
 		}
 		else if(attacknum == 3)
@@ -488,12 +476,10 @@ public class BattleManager : MonoBehaviour
 		{
 			StartCoroutine(laserCircleSpawn(0));
 		}
-		Debug.Log("Z");
 	}
 	
 	IEnumerator flashLights()
 	{
-		Debug.Log("N");
 		yield return announceWait;
 		
 		for(int i = 0; i < dropSequence.Length; i++)
@@ -532,7 +518,6 @@ public class BattleManager : MonoBehaviour
 	
 	IEnumerator colourSpikeDrop(int orderNum)
 	{
-		Debug.Log("D");
 		//string dropSequence = generateSpikeDropSequence();
 		
 		/*for(int i = 0; i < dropSequence.Length; i++)
@@ -588,7 +573,6 @@ public class BattleManager : MonoBehaviour
 		Vector3 startPos = spikes1.transform.position;
 		while(true)
 		{
-			Debug.Log("G");
 			spikes1.transform.position = Vector3.MoveTowards(spikes1.transform.position, startPos + spikeDropDist, spikeDropSpeed*Time.deltaTime);
 			spikes2.transform.position = Vector3.MoveTowards(spikes2.transform.position, startPos + spikeDropDist, spikeDropSpeed*Time.deltaTime);
 			if((spikes1.transform.position - (startPos + spikeDropDist)).magnitude <= 0.01)
@@ -748,7 +732,6 @@ public class BattleManager : MonoBehaviour
 	IEnumerator laserAttack1()
 	{
 		yield return announceWait;
-		Debug.Log("V");
 		sweepingLasers1.SetActive(true);
 		Vector3 startPos = sweepingLasers1.transform.position;
 		while(true)
@@ -760,22 +743,17 @@ public class BattleManager : MonoBehaviour
 			}
 			if(sweepingLasers1.transform.position == startPos + lasers1Dist)
 			{
-				Debug.Log("T");
 				break;
 			}
 			else
 			{
-				Debug.Log("U");
 				yield return null;
 			}
 		}
-		Debug.Log("S");
 		sweepingLasers1.SetActive(false);
-		Debug.Log("R");
 		attackNum++;
 		attacking = false;
 		yield return announceWait;
-		Debug.Log("Q");
 		//StartCoroutine(robotSphereAnnounce(attacknum+1));
 	}
 	

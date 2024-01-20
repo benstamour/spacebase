@@ -231,29 +231,51 @@ public class Lever : MonoBehaviour
 			
 			if(characterScript.gravSign == -1)
 			{
+				Debug.Log("A" + characterScript.gravSign);
 				float rotation = 0f;
 				while(rotation < 180)
 				{
 					float waitTime = Time.deltaTime;
-					float amount = Mathf.Min(Mathf.Abs(180 - character.transform.eulerAngles.z), rotateSpeed*waitTime);
+					float charRotation;
+					if(character.transform.eulerAngles.z != 0)
+					{
+						charRotation = character.transform.eulerAngles.z;
+					}
+					else
+					{
+						charRotation = character.transform.eulerAngles.x;
+					}
+					float amount = Mathf.Min(Mathf.Abs(180 - charRotation), rotateSpeed*waitTime);
 					//character.transform.Rotate(new Vector3(0,0,amount));
 					character.transform.RotateAround(character.transform.position + (Vector3.up*characterScript.gravSign*0.8f), axis, amount);
 					rotation += amount;
 					yield return null;
 				}
+				character.transform.eulerAngles = new Vector3(0, character.transform.eulerAngles.y, 180);
 			}
 			else
 			{
+				Debug.Log("B" + characterScript.gravSign);
 				float rotation = 180f;
 				while(rotation > 0)
 				{
 					float waitTime = Time.deltaTime;
-					float amount = Mathf.Min(Mathf.Abs(character.transform.eulerAngles.z), rotateSpeed*waitTime);
+					float charRotation;
+					if(character.transform.eulerAngles.z != 0)
+					{
+						charRotation = character.transform.eulerAngles.z;
+					}
+					else
+					{
+						charRotation = character.transform.eulerAngles.x;
+					}
+					float amount = Mathf.Min(Mathf.Abs(charRotation), rotateSpeed*waitTime);
 					//character.transform.Rotate(new Vector3(0,0,amount));
-					character.transform.RotateAround(character.transform.position - (Vector3.up*characterScript.gravSign*0.8f), axis, amount);
+					character.transform.RotateAround(character.transform.position + (Vector3.up*characterScript.gravSign*0.8f), axis, amount);
 					rotation -= amount;
 					yield return null;
 				}
+				character.transform.eulerAngles = new Vector3(0, character.transform.eulerAngles.y, 0);
 			}
 		}
 	}

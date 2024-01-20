@@ -623,8 +623,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 529, y: 50}
-  m_SizeDelta: {x: 1200, y: 200}
+  m_AnchoredPosition: {x: 675, y: 50}
+  m_SizeDelta: {x: 1500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295269876
 MonoBehaviour:
@@ -646,14 +646,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'WASD / Arrow Keys: Move/Turn
+  m_text: 'WASD / Arrow Keys: Move / Turn
 
     Space: Jump
 
-    E: Interact/Focus (for
-    buttons, levers, and keypads)
+    E: Interact / Focus
+    (for buttons, levers, and keypads)
 
-    P: Pause'
+    P: Pause / Resume'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46170d84c15984441b208a3449792e7d, type: 2}
   m_sharedMaterial: {fileID: -2210114519294133568, guid: 46170d84c15984441b208a3449792e7d, type: 2}
@@ -686,7 +686,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
