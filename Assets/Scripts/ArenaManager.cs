@@ -260,6 +260,10 @@ public class ArenaManager : MonoBehaviour
 		}
 		else // spawnPoint == 3
 		{
+			for(int i = 0; i <= 1; i++)
+			{
+				rooms[i].SetActive(false);
+			}
 			for(int i = 10; i < rooms.Length; i++)
 			{
 				rooms[i].SetActive(false);

@@ -5,6 +5,8 @@ using UnityEngine;
 public class SpinningLaserTrigger : MonoBehaviour
 {
 	[SerializeField] private GameObject lasers;
+	[SerializeField] private GameObject[] unhideRooms;
+	[SerializeField] private GameObject[] hideRooms;
 	
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,15 @@ public class SpinningLaserTrigger : MonoBehaviour
 		if(other.gameObject.tag == "Character")
 		{
 			lasers.SetActive(true);
+			
+			for(int i = 0; i < this.unhideRooms.Length; i++)
+			{
+				unhideRooms[i].SetActive(true);
+			}
+			for(int i = 0; i < this.hideRooms.Length; i++)
+			{
+				hideRooms[i].SetActive(false);
+			}
 		}
 	}
 }

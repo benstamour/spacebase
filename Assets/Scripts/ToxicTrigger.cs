@@ -6,6 +6,7 @@ public class ToxicTrigger : MonoBehaviour
 {
 	private bool activated = false;
 	
+	[SerializeField] private GameObject[] unhideRooms;
 	[SerializeField] private GameObject[] hideRooms;
 	
     // Start is called before the first frame update
@@ -26,6 +27,10 @@ public class ToxicTrigger : MonoBehaviour
 		{
 			activated = true;
 			
+			for(int i = 0; i < this.unhideRooms.Length; i++)
+			{
+				unhideRooms[i].SetActive(true);
+			}
 			for(int i = 0; i < this.hideRooms.Length; i++)
 			{
 				hideRooms[i].SetActive(false);
